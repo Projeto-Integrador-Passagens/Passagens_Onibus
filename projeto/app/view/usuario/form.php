@@ -46,22 +46,35 @@ require_once(__DIR__ . "/../include/menu.php");
                         value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
                 </div>
 
-                <div class="form-group">
-                    <label>Papel</label>
-                    <select class="form-control" name="papel" id="selPapel">
-                        <option value="">Selecione o papel</option>
-                        <?php foreach($dados["papeis"] as $papel): ?>
-                            <option value="<?= $papel ?>" 
-                                <?php 
-                                    if(isset($dados["usuario"]) && $dados["usuario"]->getPapel() == $papel) 
-                                        echo "selected";
-                                ?>    
-                            >
-                                <?= $papel ?>
-                            </option>
-                        <?php endforeach; ?>
 
-                    </select>
+                <div class="form-group">
+                    <label for="numberCpf">Cpf:</label>
+                    <input class="form-control" type="number" id="numberCpf" name="Cpf" 
+                        maxlength="15" placeholder="Informe o Cpf"
+                        value="<?php echo isset($dados['Cpf']) ? $dados['Cpf'] : '';?>"/>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="numberRg">Rg:</label>
+                    <input class="form-control" type="number" id="numberRg" name="Rg" 
+                        maxlength="15" placeholder="Informe o Rg"
+                        value="<?php echo isset($dados['Rg']) ? $dados['Rg'] : '';?>"/>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="numberTel_fixo">Telefone Fixo:</label>
+                    <input class="form-control" type="number" id="numbertelcelular" name="telfixo" 
+                        maxlength="15" placeholder="Informe o telfixo"
+                        value="<?php echo isset($dados['telfixo']) ? $dados['telfixo'] : '';?>"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="numberCpf">telefone celular:</label>
+                    <input class="form-control" type="number" id="numbertelcelular" name="telcelular" 
+                        maxlength="15" placeholder="Informe o telcelular"
+                        value="<?php echo isset($dados['telcelular']) ? $dados['telcelular'] : '';?>"/>
                 </div>
 
                 <input type="hidden" id="hddId" name="id" 
