@@ -4,7 +4,7 @@
 
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'martinbus');
+define('DB_NAME', 'passag_onibus');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'bancodedados');
 

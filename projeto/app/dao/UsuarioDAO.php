@@ -77,7 +77,10 @@ class UsuarioDAO {
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
         $stm->bindValue("senha", $usuario->getSenha());
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("cpf", $usuario->getCpf());
+        $stm->bindValue("Telefone celular", $usuario->getTelCelular());
+        $stm->bindValue("rg", $usuario->getRg());
+        $stm->bindValue("Telefone Fixo", $usuario->getTelFixo());
         $stm->execute();
     }
 
@@ -93,7 +96,10 @@ class UsuarioDAO {
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("login", $usuario->getLogin());
         $stm->bindValue("senha", $usuario->getSenha());
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("rg", $usuario->getRg());
+        $stm->bindValue("cpf", $usuario->getCpf());
+        $stm->bindValue("TelFixo", $usuario->getTelFixo());
+        $stm->bindValue("TelCel", $usuario->getTelCelular());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -118,7 +124,10 @@ class UsuarioDAO {
             $usuario->setNome($reg['nome_usuario']);
             $usuario->setLogin($reg['login']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setPapel($reg['papel']);
+            $usuario->setCpf($reg['cpf']);
+            $usuario->setRg($reg['rg']);
+            $usuario->setTelCelular($reg['telefone_Celular']);
+            $usuario->setTelFixo($reg['Telefone_fixo']);
             array_push($usuarios, $usuario);
         }
 

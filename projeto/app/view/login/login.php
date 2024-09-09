@@ -30,7 +30,11 @@ require_once(__DIR__ . "/../include/header.php");
 
                     <button type="submit" class="btn btn-success">Logar</button>
                 </form>
+
+                <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=create">Não possui conta? Clique aqui</a>
             </div>
+
+
         </div>
 
         <div class="col-6">
