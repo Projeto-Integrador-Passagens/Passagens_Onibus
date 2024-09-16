@@ -70,8 +70,8 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papel)" .
-               " VALUES (:nome, :login, :senha, :papel)";
+        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, cpf, rg, TelCelular, TelFixo)" .
+               " VALUES (:nome, :login, :senha, :cpf, :rg, :TelCelular, :TelFixo )";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
@@ -89,7 +89,7 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, papel = :papel" .   
+               " senha = :senha, rg = :rg, cpf = :cpf, TelFixo = :TelFixo, TelCel = :TelCel, " .   
                " WHERE id_usuario = :id";
         
         $stm = $conn->prepare($sql);

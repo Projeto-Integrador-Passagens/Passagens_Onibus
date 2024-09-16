@@ -4,13 +4,13 @@
 
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'passag_onibus');
+define('DB_NAME', 'passagens_onibus');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'bancodedados');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
-define('BASEURL', '/Passagens_Onibus/projeto/app');
+define('BASEURL', '/Passagens_Onibus-main/projeto/app');
 
 //Nome do sistema
 define('APP_NAME', 'MartinBus');

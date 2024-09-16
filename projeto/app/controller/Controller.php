@@ -47,17 +47,5 @@ class Controller {
         }
     }
 
-    //Método que verifica se o usuário está logado
-    protected function usuarioLogado() {
-        //Habilitar o recurso de sessão no PHP nesta página
-        session_start();
-
-        if(! isset($_SESSION[SESSAO_USUARIO_ID])) {
-            header("location: " . LOGIN_PAGE);
-            return false;
-        }
-
-        return true;
-    }
 
 }

@@ -43,7 +43,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     <label for="txtConfSenha">Confirmação da senha:</label>
                     <input class="form-control" type="password" id="txtConfSenha" name="conf_senha" 
                         maxlength="15" placeholder="Informe a confirmação da senha"
-                        value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
+                        value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getConf_senha() : '';?>"/>
                 </div>
 
 
@@ -51,7 +51,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     <label for="numberCpf">Cpf:</label>
                     <input class="form-control" type="number" id="numberCpf" name="Cpf" 
                         maxlength="15" placeholder="Informe o Cpf"
-                        value="<?php echo isset($dados['Cpf']) ? $dados['Cpf'] : '';?>"/>
+                        value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : '';?>"/>
                 </div>
 
 
@@ -59,22 +59,22 @@ require_once(__DIR__ . "/../include/menu.php");
                     <label for="numberRg">Rg:</label>
                     <input class="form-control" type="number" id="numberRg" name="Rg" 
                         maxlength="15" placeholder="Informe o Rg"
-                        value="<?php echo isset($dados['Rg']) ? $dados['Rg'] : '';?>"/>
+                        value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getRg() : '';?>"/>>
                 </div>
 
 
                 <div class="form-group">
                     <label for="numberTel_fixo">Telefone Fixo:</label>
                     <input class="form-control" type="number" id="numbertelcelular" name="telfixo" 
-                        maxlength="15" placeholder="Informe o telfixo"
-                        value="<?php echo isset($dados['telfixo']) ? $dados['telfixo'] : '';?>"/>
+                        maxlength="15" placeholder="Informe o telefone fixo"
+                        value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getTelFixo() : '';?>"/>
                 </div>
 
                 <div class="form-group">
                     <label for="numberCpf">telefone celular:</label>
                     <input class="form-control" type="number" id="numbertelcelular" name="telcelular" 
-                        maxlength="15" placeholder="Informe o telcelular"
-                        value="<?php echo isset($dados['telcelular']) ? $dados['telcelular'] : '';?>"/>
+                        maxlength="15" placeholder="Informe o telefone do celular"
+                        value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getTelCelular() : '';?>"/>
                 </div>
 
                 <input type="hidden" id="hddId" name="id" 

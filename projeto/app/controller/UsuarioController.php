@@ -28,6 +28,7 @@ class UsuarioController extends Controller {
         $dados["lista"] = $usuarios;
 
         $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
+
     }
 
     protected function save() {
@@ -36,14 +37,21 @@ class UsuarioController extends Controller {
         $nome = trim($_POST['nome']) ? trim($_POST['nome']) : NULL;
         $login = trim($_POST['login']) ? trim($_POST['login']) : NULL;
         $senha = trim($_POST['senha']) ? trim($_POST['senha']) : NULL;
-        $confSenha = trim($_POST['conf_senha']) ? trim($_POST['conf_senha']) : NULL;
-        $papel = trim($_POST['papel']) ? trim($_POST['papel']) : NULL;
+        $cpf = trim($_POST['cpf']) ? trim($_POST['cpf']) : NULL;
+        $rg = trim($_POST['rg']) ? trim($_POST['rg']) : NULL;
+        $telFixo = trim($_POST['telFixo']) ? trim($_POST['telFixo']) : NULL;
+        $telCelular = trim($_POST['telCelular']) ? trim($_POST['telCelular']) : NULL;
+       
 
         //Cria objeto Usuario
         $usuario = new Usuario();
         $usuario->setNome($nome);
         $usuario->setLogin($login);
         $usuario->setSenha($senha);
+        $usuario->setRg($rg);
+        $usuario->setCpf($cpf);
+        $usuario->setTelCelular($telCelular);
+        $usuario->setTelFixo($telFixo);
         //$usuario->setPapel($papel);
 
         //Validar os dados
@@ -73,7 +81,7 @@ class UsuarioController extends Controller {
         //Carregar os valores recebidos por POST de volta para o formulário
         $dados["usuario"] = $usuario;
         $dados["confSenha"] = $confSenha;
-        $dados["papeis"] = UsuarioPapel::getAllAsArray();
+        
 
         $msgsErro = implode("<br>", $erros);
         $this->loadView("usuario/form.php", $dados, $msgsErro);
@@ -82,7 +90,6 @@ class UsuarioController extends Controller {
 
      protected function create() {
         $dados["id"] = 0;
-        $dados["papeis"] = UsuarioPapel::getAllAsArray();
         $this->loadView("usuario/form.php", $dados);
      }
 
