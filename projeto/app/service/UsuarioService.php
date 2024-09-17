@@ -12,30 +12,26 @@ class UsuarioService {
         if(! $usuario->getNome())
             array_push($erros, "O campo [Nome] é obrigatório.");
 
-        if(! $usuario->getLogin())
-            array_push($erros, "O campo [Login] é obrigatório.");
+        if(! $usuario->getCpf())
+            array_push($erros, "O campo [Cpf] é obrigatório.");
+
+        if(! $usuario->getRg())
+            array_push($erros, "O campo [Rg] é obrigatório.");
+
+        /*if(! $usuario->getTelFixo())
+            array_push($erros, "O campo [Telefone Fixo] é obrigatório.");*/
+
+        if(! $usuario->getTelCelular())
+                array_push($erros, "O campo [Telefone do celular] é obrigatório.");
+
+        if(! $usuario->getEmail())
+            array_push($erros, "O campo [Email] é obrigatório.");
 
         if(! $usuario->getSenha())
             array_push($erros, "O campo [Senha] é obrigatório.");
 
         if(! $confSenha)
             array_push($erros, "O campo [Confirmação da senha] é obrigatório.");
-
-        if(! $cpf->getCpf())
-            array_push($erros, "O campo [Cpf] é obrigatório.");
-
-        if(! $telFixo->getTelFixo())
-            array_push($erros, "O campo [Telefone Fixo] é obrigatório.");
-
-        if(! $rg->getRg())
-            array_push($erros, "O campo [Rg] é obrigatório.");
-
-        if(! $telCelular->getTelCelular())
-            array_push($erros, "O campo [Telefone do celular] é obrigatório.");
-
-
-        
-
 
         //Validar se a senha é igual a contra senha
         if($usuario->getSenha() && $confSenha && $usuario->getSenha() != $confSenha)

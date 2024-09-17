@@ -7,11 +7,11 @@ include_once(__DIR__ . "/../model/Usuario.php");
 
 class UsuarioDAO {
 
-    //Método para listar os usuaários a partir da base de dados
+    //Método para listar os usuários a partir da base de dados
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u ORDER BY u.nome_usuario";
+        $sql = "SELECT * FROM usuarios u ORDER BY u.nome";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -41,28 +41,24 @@ class UsuarioDAO {
     }
 
 
-    //Método para buscar um usuário por seu login e senha
-    public function findByLoginSenha(string $login, string $senha) {
+    //Método para buscar um usuário por seu email e senha
+    public function findByEmailSenha(string $email, string $senha) {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuarios u" .
-               " WHERE BINARY u.login = ?";
+               " WHERE BINARY u.email = ? AND BINARY u.senha = ?";
         $stm = $conn->prepare($sql);    
-        $stm->execute([$login]);
+        $stm->execute([$email, $senha]);
         $result = $stm->fetchAll();
 
         $usuarios = $this->mapUsuarios($result);
 
         if(count($usuarios) == 1) {
-            //Tratamento para senha criptografada
-            if(password_verify($senha, $usuarios[0]->getSenha()))
-                return $usuarios[0];
-            else
-                return null;
+            return $usuarios[0];
         } elseif(count($usuarios) == 0)
             return null;
 
-        die("UsuarioDAO.findByLoginSenha()" . 
+        die("UsuarioDAO.findByEmailSenha()" . 
             " - Erro: mais de um usuário encontrado.");
     }
 
@@ -70,17 +66,19 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, cpf, rg, TelCelular, TelFixo)" .
-               " VALUES (:nome, :login, :senha, :cpf, :rg, :TelCelular, :TelFixo )";
+        $sql = "INSERT INTO usuarios (nome, tipo, cpf, email, senha, rg, tel_fixo, tel_celular, situacao)" .
+               " VALUES (:nome, :tipo, :cpf, :email, :senha, :rg, :TelFixo, :TelCelular, :situacao)";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
-        $stm->bindValue("senha", $usuario->getSenha());
+        $stm->bindValue("tipo", $usuario->getTipo());   
         $stm->bindValue("cpf", $usuario->getCpf());
-        $stm->bindValue("Telefone celular", $usuario->getTelCelular());
+        $stm->bindValue("email", $usuario->getEmail());
+        $stm->bindValue("senha", $usuario->getSenha());
         $stm->bindValue("rg", $usuario->getRg());
-        $stm->bindValue("Telefone Fixo", $usuario->getTelFixo());
+        $stm->bindValue("TelFixo", $usuario->getTelFixo());
+        $stm->bindValue("TelCelular", $usuario->getTelCelular());
+        $stm->bindValue("situacao", $usuario->getSituacao());
         $stm->execute();
     }
 
@@ -88,19 +86,22 @@ class UsuarioDAO {
     public function update(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, rg = :rg, cpf = :cpf, TelFixo = :TelFixo, TelCel = :TelCel, " .   
+        $sql = "UPDATE usuarios SET nome = :nome, tipo = :tipo," . 
+                "cpf = :cpf,  email = :email,  senha = :senha, rg = :rg, TelFixo = :TelFixo, TelCel = :TelCel " .   
                " WHERE id_usuario = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("tipo", $usuario->getTipo());
+        $stm->bindValue("cpf", $usuario->getCpf());
+        $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", $usuario->getSenha());
         $stm->bindValue("rg", $usuario->getRg());
-        $stm->bindValue("cpf", $usuario->getCpf());
         $stm->bindValue("TelFixo", $usuario->getTelFixo());
         $stm->bindValue("TelCel", $usuario->getTelCelular());
         $stm->bindValue("id", $usuario->getId());
+        $stm->bindValue("situacao", $usuario->getSituacao());
+
         $stm->execute();
     }
 
@@ -120,14 +121,17 @@ class UsuarioDAO {
         $usuarios = array();
         foreach ($result as $reg) {
             $usuario = new Usuario();
-            $usuario->setId($reg['id_usuario']);
-            $usuario->setNome($reg['nome_usuario']);
-            $usuario->setLogin($reg['login']);
-            $usuario->setSenha($reg['senha']);
+            $usuario->setId($reg['id']);
+            $usuario->setNome($reg['nome']);
+            $usuario->setTipo($reg['tipo']);
             $usuario->setCpf($reg['cpf']);
+            $usuario->setEmail($reg['email']);
+            $usuario->setSenha($reg['senha']);
             $usuario->setRg($reg['rg']);
-            $usuario->setTelCelular($reg['telefone_Celular']);
-            $usuario->setTelFixo($reg['Telefone_fixo']);
+            $usuario->setTelFixo($reg['tel_fixo']);
+            $usuario->setTelCelular($reg['tel_celular']);
+            $usuario->setSituacao($reg['situacao']);
+
             array_push($usuarios, $usuario);
         }
 

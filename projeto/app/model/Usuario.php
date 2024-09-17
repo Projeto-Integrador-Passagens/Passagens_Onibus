@@ -2,33 +2,25 @@
 #Nome do arquivo: Usuario.php
 #Objetivo: classe Model para Usuario
 
-require_once(__DIR__ . "/enum/UsuarioPapel.php");
-
 class Usuario {
 
     private ?int $id;
     private ?string $nome;
-    private ?string $login;
+    private ?string $email;
     private ?string $senha;
-    private ?int $cpf;
-    private ?int $rg;
-    private ?int $telFixo;
-    private ?int $telCelular;
-    
-    
+    private ?string $cpf;
+    private ?string $rg;
+    private ?string $telFixo;
+    private ?string $telCelular;
 
+    private ?string $tipo;
+    private ?string $situacao;
   
-    /**
-     * Get the value of id
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     */
     public function setId(?int $id): self
     {
         $this->id = $id;
@@ -36,17 +28,11 @@ class Usuario {
         return $this;
     }
 
-    /**
-     * Get the value of nome
-     */
     public function getNome(): ?string
     {
         return $this->nome;
     }
 
-    /**
-     * Set the value of nome
-     */
     public function setNome(?string $nome): self
     {
         $this->nome = $nome;
@@ -54,35 +40,23 @@ class Usuario {
         return $this;
     }
 
-    /**
-     * Get the value of login
-     */
-    public function getLogin(): ?string
+    public function getEmail(): ?string
     {
-        return $this->login;
+        return $this->email;
     }
 
-    /**
-     * Set the value of login
-     */
-    public function setLogin(?string $login): self
+    public function setEmail(?string $email): self
     {
-        $this->login = $login;
+        $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get the value of senha
-     */
     public function getSenha(): ?string
     {
         return $this->senha;
     }
 
-    /**
-     * Set the value of senha
-     */
     public function setSenha(?string $senha): self
     {
         $this->senha = $senha;
@@ -90,74 +64,74 @@ class Usuario {
         return $this;
     }
 
-    /**
-     * Get the value of cpf
-     */
-    public function getCpf(): ?int
+    public function getCpf(): ?string
     {
         return $this->cpf;
     }
 
-    /**
-     * Set the value of cpf
-     */
-    public function setCpf(?int $cpf): self
+    public function setCpf(?string $cpf): self
     {
         $this->cpf = $cpf;
 
         return $this;
     }
 
-    /**
-     * Get the value of rg
-     */
-    public function getRg(): ?int
+    public function getRg(): ?string
     {
         return $this->rg;
     }
 
-    /**
-     * Set the value of rg
-     */
-    public function setRg(?int $rg): self
+    public function setRg(?string $rg): self
     {
         $this->rg = $rg;
 
         return $this;
     }
 
-    /**
-     * Get the value of tel_fixo
-     */
-    public function getTelFixo(): ?int
+    public function getTelFixo(): ?string
     {
         return $this->telFixo;
     }
 
-    /**
-     * Set the value of tel_fixo
-     */
-    public function setTelFixo(?int $telFixo): self
+    public function setTelFixo(?string $telFixo): self
     {
         $this->telFixo = $telFixo;
 
         return $this;
     }
 
-    /**
-     * Get the value of tel_celular
-     */
-    public function getTelCelular(): ?int
+    public function getTelCelular(): ?string
     {
         return $this->telCelular;
     }
 
-    /**
-     * Set the value of tel_celular
-     */
-    public function setTelCelular(?int $telCelular): self
+    public function setTelCelular(?string $telCelular): self
     {
         $this->telCelular = $telCelular;
+
+        return $this;
+    }
+
+    public function getTipo(): ?string
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?string $tipo): self
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public function getSituacao(): ?string
+    {
+        return $this->situacao;
+    }
+
+    public function setSituacao(?string $situacao): self
+    {
+        $this->situacao = $situacao;
 
         return $this;
     }
