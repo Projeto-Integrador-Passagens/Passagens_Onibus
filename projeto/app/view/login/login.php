@@ -7,7 +7,7 @@ require_once(__DIR__ . "/../include/header.php");
 
 <div class="container">
     <div class="row" style="margin-top: 20px;">
-        <div class="col-6">
+        <div class="col-6"> 
             <div class="alert alert-info">
                 <h4>Informe os dados para logar:</h4>
                 <br>
