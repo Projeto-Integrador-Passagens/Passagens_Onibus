@@ -15,6 +15,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+ALTER TABLE usuarios ADD CONSTRAINT uk_usuario UNIQUE (email);
+
+
 
 -- -----------------------------------------------------
 -- Table `onibus`

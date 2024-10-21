@@ -24,7 +24,7 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuarios u" .
-               " WHERE u.id_usuario = ?";
+               " WHERE u.id = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
@@ -87,8 +87,8 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET nome = :nome, tipo = :tipo," . 
-                "cpf = :cpf,  email = :email,  senha = :senha, rg = :rg, TelFixo = :TelFixo, TelCel = :TelCel " .   
-               " WHERE id_usuario = :id";
+                "cpf = :cpf,  email = :email,  senha = :senha, rg = :rg, tel_fixo = :TelFixo, tel_celular = :TelCel, situacao = :situacao " .   
+               " WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
@@ -99,8 +99,8 @@ class UsuarioDAO {
         $stm->bindValue("rg", $usuario->getRg());
         $stm->bindValue("TelFixo", $usuario->getTelFixo());
         $stm->bindValue("TelCel", $usuario->getTelCelular());
-        $stm->bindValue("id", $usuario->getId());
         $stm->bindValue("situacao", $usuario->getSituacao());
+        $stm->bindValue("id", $usuario->getId());
 
         $stm->execute();
     }
@@ -109,13 +109,13 @@ class UsuarioDAO {
     public function deleteById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario = :id";
+        $sql = "DELETE FROM usuarios WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
         $stm->execute();
     }
-
+    
     //Método para converter um registro da base de dados em um objeto Usuario
     private function mapUsuarios($result) {
         $usuarios = array();

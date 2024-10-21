@@ -47,5 +47,31 @@ class Controller {
         }
     }
 
+    //Método que verifica se o usuário está logado
+    protected function usuarioLogado() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        if(! isset($_SESSION[SESSAO_USUARIO_ID])) {
+            header("location: " . LOGIN_PAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    //Método que verifica se o usuário está logado
+    protected function usuarioLogadoStatus() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        if(isset($_SESSION[SESSAO_USUARIO_ID]))
+            return true;
+
+        return false;
+    }
+
 
 }

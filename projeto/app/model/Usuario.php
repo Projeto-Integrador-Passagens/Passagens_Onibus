@@ -2,6 +2,8 @@
 #Nome do arquivo: Usuario.php
 #Objetivo: classe Model para Usuario
 
+require_once(__DIR__ . '/enum/UsuarioTipo.php');
+
 class Usuario {
 
     private ?int $id;
