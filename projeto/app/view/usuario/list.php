@@ -58,7 +58,15 @@ require_once(__DIR__ . "/../include/menu.php");
             </table>
         </div>
     </div>
-</div>
+
+<?php    
+require_once(__DIR__ . "/../onibus/list.php");
+
+?>
+
+
+
+
 
 <?php
 require_once(__DIR__ . "/../include/footer.php");

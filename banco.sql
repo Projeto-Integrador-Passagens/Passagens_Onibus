@@ -17,7 +17,8 @@ ENGINE = InnoDB;
 
 ALTER TABLE usuarios ADD CONSTRAINT uk_usuario UNIQUE (email);
 
-
+INSERT INTO `usuarios` (`id`, `tipo`, `nome`, `cpf`, `email`, `senha`, `rg`, `tel_fixo`, `tel_celular`, `situacao`) VALUES
+(1, 'MANTENEDOR', 'ADM', '123', 'luisgostoso@gmail.com', '123', '123', '123', '123', 'ATIVO');
 
 -- -----------------------------------------------------
 -- Table `onibus`
