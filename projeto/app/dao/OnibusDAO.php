@@ -8,7 +8,7 @@ include_once(__DIR__ . "/../model/Onibus.php");
 class OnibusDAO {
 
     // Método para listar os ônibus a partir da base de dados
-    public function list() {
+    public function listByUsuario($idUsuario) {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM onibus ORDER BY modelo";

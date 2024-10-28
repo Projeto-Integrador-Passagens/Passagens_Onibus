@@ -3,7 +3,7 @@
 #Objetivo: menu da aplicação para ser incluído em outras páginas
 
 $nome = "(Sessão expirada)";
-if(isset($_SESSION[SESSAO_USUARIO_NOME]))
+if (isset($_SESSION[SESSAO_USUARIO_NOME]))
     $nome = $_SESSION[SESSAO_USUARIO_NOME];
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,11 +15,14 @@ if(isset($_SESSION[SESSAO_USUARIO_NOME]))
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                role="button" data-toggle="dropdown" aria-haspopup="true" 
-                aria-expanded="false"> Cadastros </a>
+                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"> Cadastros </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" 
+                    <a class="dropdown-item"
                         href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+                    
+                    <a class="dropdown-item" 
+                        href="<?= BASEURL . '/controller/OnibusController.php?action=list' ?>">Veiculos</a>
                 </div>
             </li>
 
@@ -29,7 +32,7 @@ if(isset($_SESSION[SESSAO_USUARIO_NOME]))
         </ul>
 
         <ul class="navbar-nav mr-left">
-            <li class="nav-item active"><?= $nome?></li>
+            <li class="nav-item active"><?= $nome ?></li>
         </ul>
     </div>
 </nav>

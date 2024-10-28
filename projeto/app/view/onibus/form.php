@@ -40,13 +40,6 @@ require_once(__DIR__ . "/../include/menu.php");
                         value="<?php echo (isset($dados["onibus"]) ? $dados["onibus"]->getTotalAssentos() : ''); ?>" />
                 </div>
 
-                <div class="form-group">
-                    <label for="numberUsuariosId">Usuários ID:</label>
-                    <input class="form-control" type="number" id="numberUsuariosId" name="usuarios_id"
-                        placeholder="Informe o ID do usuário"
-                        value="<?php echo (isset($dados["onibus"]) ? $dados["onibus"]->getUsuariosId() : ''); ?>" />
-                </div>
-
                 <input type="hidden" id="hddId" name="id"
                     value="<?= $dados['id']; ?>" />
 

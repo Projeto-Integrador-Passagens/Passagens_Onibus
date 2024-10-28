@@ -18,10 +18,6 @@ class OnibusService {
 
         if(!$onibus->getTotalAssentos())
             array_push($erros, "O campo [Total de Assentos] é obrigatório.");
-
-        if(!$onibus->getUsuariosId())
-            array_push($erros, "O campo [Usuários ID] é obrigatório.");
-
         return $erros;
     }
 

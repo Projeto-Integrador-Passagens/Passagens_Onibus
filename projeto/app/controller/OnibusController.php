@@ -25,7 +25,9 @@ class OnibusController extends Controller {
         if (! $this->usuarioLogado())
             exit;
 
-        $onibus = $this->onibusDao->list();
+        $usuariosId = $this->getIdUsuarioLogado();
+
+        $onibus = $this->onibusDao->listByUsuario($usuariosId);
         $dados["lista"] = $onibus;
 
         $this->loadView("onibus/list.php", $dados, $msgErro, $msgSucesso);
@@ -37,7 +39,9 @@ class OnibusController extends Controller {
         $modelo = trim($_POST['modelo']) ? trim($_POST['modelo']) : NULL;
         $marca = trim($_POST['marca']) ? trim($_POST['marca']) : NULL;
         $totalAssentos = trim($_POST['total_assentos']) ? trim($_POST['total_assentos']) : NULL;
-        $usuariosId = trim($_POST['usuarios_id']) ? trim($_POST['usuarios_id']) : NULL;
+        //$usuariosId = trim($_POST['usuarios_id']) ? trim($_POST['usuarios_id']) : NULL;
+
+        $usuariosId = $this->getIdUsuarioLogado();
 
         // Cria objeto Onibus
         $onibus = new Onibus();
@@ -47,25 +51,24 @@ class OnibusController extends Controller {
         $onibus->setUsuariosId($usuariosId);
 
         // Validar os dados
-        $erros = $this->onibusService->validarDados($onibus);
+    $erros = $this->onibusService->validarDados($onibus);
 
-        if (empty($erros)) {
-            // Persiste o objeto
-            try {
-                if ($dados["id"] == 0) {  // Inserindo
-                    $this->onibusDao->insert($onibus);
-                } else { // Alterando
-                    $onibus->setId($dados["id"]);
-                    $this->onibusDao->update($onibus);
-                }
-
-                $this->list("", "Ônibus salvo com sucesso.");
-                exit;
-            } catch (PDOException $e) {
-                $erros = array("Erro ao salvar o ônibus na base de dados: " . $e->getMessage());                
+    if (empty($erros)) {
+        // Persiste o objeto
+        try {
+            if ($dados["id"] == 0) {  // Inserindo
+                $this->onibusDao->insert($onibus);
+            } else { // Alterando
+                $onibus->setId($dados["id"]);
+                $this->onibusDao->update($onibus);
             }
-        }
 
+            $this->list("", "Ônibus salvo com sucesso.");
+            exit;
+        } catch (PDOException $e) {
+            $erros[] = "Erro ao salvar o ônibus na base de dados: " . $e->getMessage(); 
+        }
+    }
         // Se há erros, volta para o formulário
         $dados["onibus"] = $onibus;
         $dados["erros"] = implode("<br>", $erros);
