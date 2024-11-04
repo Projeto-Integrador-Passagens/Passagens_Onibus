@@ -23,6 +23,9 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                     
                     <a class="dropdown-item" 
                         href="<?= BASEURL . '/controller/OnibusController.php?action=list' ?>">Veiculos</a>
+                        
+                        <a class="dropdown-item" 
+                        href="<?= BASEURL . '/controller/ViagensController.php?action=list' ?>">Viagens</a>
                 </div>
             </li>
 

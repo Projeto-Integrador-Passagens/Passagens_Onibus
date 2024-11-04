@@ -8,8 +8,8 @@ error_reporting(E_ALL);
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'passagens_onibus');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'bancodedados');
+define('DB_USER', 'root@');
+define('DB_PASSWORD', '');  
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
