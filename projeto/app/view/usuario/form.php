@@ -3,20 +3,25 @@
 #Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
-require_once(__DIR__ . "/../include/menu.php");
+
+if(isset($_SESSION[SESSAO_USUARIO_ID]))
+    require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">
+<h3 class="text-center fonte-branca inserir-usuario">
     <?php if ($dados['id'] == 0) echo "Inserir";
     else echo "Alterar"; ?>
-    Usuário
+    Usuário  
 </h3>
-
+<div class="container" style="height: 50vh;">
+    <div class="row justify-content-center align-items-center" style="height: 100%;">
+        <div class="col-6"> 
+        <div class="alert alert-info" style="background: linear-gradient(to right, #09d8df, #054798); color: white;">
 <div class="container">
 
     <div class="row" style="margin-top: 10px;">
 
-        <div class="col-6">
+        <div class="col-12">
             <form id="frmUsuario" method="POST"
                 action="<?= BASEURL ?>/controller/UsuarioController.php?action=save">
                 <div class="form-group">
@@ -123,17 +128,17 @@ require_once(__DIR__ . "/../include/menu.php");
                 <input type="hidden" id="hddId" name="id"
                     value="<?= $dados['id']; ?>" />
 
-                <button type="submit" class="btn btn-success">Gravar</button>
+                <button type="submit" class="btn btn-success botao-alinhar-cadastro">Gravar</button>
                 <button type="reset" class="btn btn-danger">Limpar</button>
             </form>
         </div>
 
-        <div class="col-6">
+        <div class="col-12">
             <?php require_once(__DIR__ . "/../include/msg.php"); ?>
         </div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
+    <div class="row botao-alinhar-voltar" style="margin-top: -38px;">
         <div class="col-12">
             <a class="btn btn-secondary"
                 href="<?= BASEURL ?>/controller/UsuarioController.php?action=list">Voltar</a>

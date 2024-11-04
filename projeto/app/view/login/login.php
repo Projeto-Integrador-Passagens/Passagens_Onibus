@@ -4,16 +4,16 @@
 
 require_once(__DIR__ . "/../include/header.php");
 ?>
-
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
+<img src="">
+<div class="container" style="height: 100vh;">
+    <div class="row justify-content-center align-items-center" style="height: 100%;">
         <div class="col-6"> 
-            <div class="alert alert-info">
-                <h4>Informe os dados para logar:</h4>
+        <div class="alert alert-info fonte-branca" style="background: linear-gradient(to right, #09d8df, #054798);">
+                <h4 class="text-center">Login</h4>
                 <br>
 
                 <!-- Formulário de login -->
-                <form id="frmLogin" action="./LoginController.php?action=logon" method="POST" >
+                <form id="frmLogin" action="./LoginController.php?action=logon" method="POST">
                     <div class="form-group">
                         <label for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"
@@ -28,14 +28,16 @@ require_once(__DIR__ . "/../include/header.php");
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
-                    <button type="submit" class="btn btn-success">Logar</button>
+                    <button type="submit" class="btn btn-success botao-alinhar">Logar</button>
                 </form>
 
-                <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=create">Não possui conta? Clique aqui</a>
+                <div class="text-center mt-3">
+    <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=create" style="color: #00008B;">Não possui conta? Clique aqui</a>
+</div>
             </div>
-
-
-        </div>
+        </div>     
+    </div>
+</div>
 
         <div class="col-6">
             <?php include_once(__DIR__ . "/../include/msg.php") ?>
