@@ -4,3 +4,23 @@ body {
     height: 100vh; /* Para garantir que o fundo cubra toda a altura da tela */
     margin: 0; /* Remove a margem padrão */
 }
+
+.fonte-branca {
+    color: white;
+}
+
+.botao-alinhar {
+    margin-left: 210px;
+}
+
+.botao-alinhar-cadastro {
+    margin-left: 100px;
+}
+
+.botao-alinhar-voltar {
+    margin-left: 243px;
+    
+}
+.inserir-usuario {
+    
+}
