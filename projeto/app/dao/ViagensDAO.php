@@ -38,22 +38,39 @@ class ViagensDAO {
         die("ViagensDAO.findById() - Erro: mais de uma viagem encontrada.");
     }
 
-    // Método para inserir uma viagem
-    public function insert(Viagens $viagem) {
+    public function cadastrarViagem($onibusId, $dataHorario, $cidadeOrigem, $cidadeDestino, $preco, $totalPassagens, $situacao) {
         $conn = Connection::getConn();
-
+    
+        // Consulta para inserir uma nova viagem
         $sql = "INSERT INTO viagens (onibus_id, data_horario, cidade_origem, cidade_destino, preco, total_passagens, situacao)" .
                " VALUES (:onibus_id, :data_horario, :cidade_origem, :cidade_destino, :preco, :total_passagens, :situacao)";
         
         $stm = $conn->prepare($sql);
-        $stm->bindValue("onibus_id", $viagem->getOnibusId());
-        $stm->bindValue("data_horario", $viagem->getDataHorario());
-        $stm->bindValue("cidade_origem", $viagem->getCidadeOrigem());   
-        $stm->bindValue("cidade_destino", $viagem->getCidadeDestino());
-        $stm->bindValue("preco", $viagem->getPreco());
-        $stm->bindValue("total_passagens", $viagem->getTotalPassagens());
-        $stm->bindValue("situacao", $viagem->getSituacao());
+        
+        // Vincula os parâmetros
+        $stm->bindParam(":onibus_id", $onibusId, PDO::PARAM_INT);
+        $stm->bindParam(":data_horario", $dataHorario);
+        $stm->bindParam(":cidade_origem", $cidadeOrigem);
+        $stm->bindParam(":cidade_destino", $cidadeDestino);
+        $stm->bindParam(":preco", $preco);
+        $stm->bindParam(":total_passagens", $totalPassagens, PDO::PARAM_INT);
+        $stm->bindParam(":situacao", $situacao);
+        
+        // Executa a consulta
         $stm->execute();
+    }
+    // Método para validar capacidade maxima 
+    public function getCapacidadeById($onibusId) {
+        $conn = Connection::getConn();
+        
+        $sql = "SELECT capacidade FROM onibus WHERE id = :onibusId";
+        $stm = $conn->prepare($sql);
+        $stm->bindParam(":onibusId", $onibusId, PDO::PARAM_INT);
+        $stm->execute();
+        
+        $result = $stm->fetch();
+        
+        return $result ? $result['capacidade'] : null;
     }
 
     // Método para atualizar uma viagem
