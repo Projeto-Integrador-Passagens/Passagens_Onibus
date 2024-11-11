@@ -1,0 +1,70 @@
+body {
+    background: linear-gradient(to left, #054798, #09d8df);
+    width: 100%;
+    min-height: 100vh; /* Para garantir que o fundo cubra toda a altura da tela */
+    margin: 0; /* Remove a margem padrão */
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btnLogin {
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    width: 25%;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.msg {
+    margin-top: 20px;
+}
+
+.cadastroBtn span {
+    color: white;
+}
+
+.cadastroBtn a{
+    color: #054798;
+}
+
+#frmLogin {
+    width: 40%;
+    border: none;
+    border-radius: 20px;
+    border: 2px solid white;
+    box-shadow: 2px 3px 20px black;
+    padding: 20px;
+}
+
+
+.form-group input {
+    background: none;
+    border: 2px solid #054798;
+    border-radius: 15px;
+}
+
+.form-group input::placeholder{
+    color: white;
+}
+
+.form-group input:focus {
+    background: none;
+    border: 2px solid #09d8df;
+}
