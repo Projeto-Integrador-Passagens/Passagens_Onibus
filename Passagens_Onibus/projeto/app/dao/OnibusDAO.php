@@ -11,9 +11,9 @@ class OnibusDAO {
     public function listByUsuario($idUsuario) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM onibus ORDER BY modelo";
+        $sql = "SELECT * FROM onibus WHERE usuarios_id = ? ORDER BY modelo";
         $stm = $conn->prepare($sql);    
-        $stm->execute();
+        $stm->execute([$idUsuario]);
         $result = $stm->fetchAll();
         
         return $this->mapOnibus($result);

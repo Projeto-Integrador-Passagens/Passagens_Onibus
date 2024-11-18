@@ -3,7 +3,7 @@
 }
 
 body {
-    background-image: url(/Passagens_Onibus/projeto/app/assets/martinbus.jpg);
+    background-image: url(../../assets/martinbus.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

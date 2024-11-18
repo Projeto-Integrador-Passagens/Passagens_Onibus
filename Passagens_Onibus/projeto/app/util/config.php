@@ -13,7 +13,7 @@ define('DB_PASSWORD', 'bancodedados');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
-define('BASEURL', '/Passagens_Onibus/projeto/app');
+define('BASEURL', '/Passagens_Onibus/Passagens_Onibus/projeto/app');
 
 //Nome do sistema
 define('APP_NAME', 'MartinBus');

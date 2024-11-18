@@ -30,7 +30,6 @@ require_once(__DIR__ . "/../include/menu.php");
                         <th>Modelo</th>
                         <th>Marca</th>
                         <th>Total Assentos</th>
-                        <th>Usuários ID</th>
                         <th>Alterar</th>
                         <th>Excluir</th>
                     </tr>
@@ -42,7 +41,6 @@ require_once(__DIR__ . "/../include/menu.php");
                             <td><?= $onibus->getModelo(); ?></td>
                             <td><?= $onibus->getMarca(); ?></td>
                             <td><?= $onibus->getTotalAssentos(); ?></td>
-                            <td><?= $onibus->getUsuariosId(); ?></td>
                             <td><a class="btn btn-primary" href="<?= BASEURL ?>/controller/OnibusController.php?action=edit&id=<?= $onibus->getId() ?>">Alterar</a></td>
                             <td><a class="btn btn-danger" onclick="return confirm('Confirma a exclusão?');" href="<?= BASEURL ?>/controller/OnibusController.php?action=delete&id=<?= $onibus->getId() ?>">Excluir</a></td>
                         </tr>

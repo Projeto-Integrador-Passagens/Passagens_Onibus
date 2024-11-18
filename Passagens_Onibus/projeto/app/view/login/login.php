@@ -9,7 +9,7 @@ require_once(__DIR__ . "/../include/header.php");
 
 <div class="container" style="height: 100vh;">
         <!-- Formulário de login -->
-         <img src="/Passagens_Onibus/projeto/app/assets/logo.png" alt="">
+         <img src="<?= BASEURL ?>/assets/logo.png" alt="">
          
         <form id="frmLogin" action="./LoginController.php?action=logon" method="POST">
             <h4 class="text-center">Login</h4>
@@ -18,14 +18,16 @@ require_once(__DIR__ . "/../include/header.php");
                 <label for="txtEmail">Email:</label>
                 <input type="text" class="form-control" name="email" id="txtEmail"
                     maxlength="70" placeholder="Informe o email"
-                    value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" required />
+                    value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" required
+                    style="color:white;" />
             </div>
 
             <div class="form-group">
                 <label for="txtSenha">Senha:</label>
                 <input type="password" class="form-control" name="senha" id="txtSenha"
                     maxlength="15" placeholder="Informe a senha"
-                    value="<?php echo isset($dados['senha']) ? htmlspecialchars($dados['senha']) : '' ?>" required />
+                    value="<?php echo isset($dados['senha']) ? htmlspecialchars($dados['senha']) : '' ?>" required
+                    style="color:white;" />
             </div>
 
             <div class="btns">
