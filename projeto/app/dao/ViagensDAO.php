@@ -60,10 +60,10 @@ class ViagensDAO {
         $stm->execute();
     }
     // Método para validar capacidade maxima 
-    public function getCapacidadeById($onibusId) {
+    public function getAssentosdeById($onibusId) {
         $conn = Connection::getConn();
         
-        $sql = "SELECT capacidade FROM onibus WHERE id = :onibusId";
+        $sql = "SELECT total_assentos FROM onibus WHERE id = :onibusId";
         $stm = $conn->prepare($sql);
         $stm->bindParam(":onibusId", $onibusId, PDO::PARAM_INT);
         $stm->execute();

@@ -17,8 +17,7 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row" style="margin-top: 10px;">
 
         <div class="col-6">
-            <form id="frmViagens" method="POST"
-                action="<?= BASEURL ?>/controller/ViagensController.php?action=save">
+            <form id="frmViagens" method="POST" action="<?= BASEURL ?>/controller/ViagensController.php?action=save">
 
                 <div class="form-group">
                     <label for="txtDataHorario">Data e Horário:</label>
@@ -29,15 +28,15 @@ require_once(__DIR__ . "/../include/menu.php");
 
                 <div class="form-group">
                     <label for="txtCidadeOrigem">Cidade de Origem:</label>
-                    <input class="form-control" type="text" id="txtCidadeOrigem" name="cidade_origem"
-                        maxlength="70" placeholder="Informe a cidade de origem"
+                    <input class="form-control" type="text" id="txtCidadeOrigem" name="cidade_origem" maxlength="70"
+                        placeholder="Informe a cidade de origem"
                         value="<?php echo (isset($dados["viagem"]) ? $dados["viagem"]->getCidadeOrigem() : ''); ?>" />
                 </div>
 
                 <div class="form-group">
                     <label for="txtCidadeDestino">Cidade de Destino:</label>
-                    <input class="form-control" type="text" id="txtCidadeDestino" name="cidade_destino"
-                        maxlength="70" placeholder="Informe a cidade de destino"
+                    <input class="form-control" type="text" id="txtCidadeDestino" name="cidade_destino" maxlength="70"
+                        placeholder="Informe a cidade de destino"
                         value="<?php echo (isset($dados["viagem"]) ? $dados["viagem"]->getCidadeDestino() : ''); ?>" />
                 </div>
 
@@ -56,15 +55,32 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
 
                 <div class="form-group">
+                    <label for="onibus_id">Ônibus:</label>
+                    <select name="onibus_id" id="onibus_id" class="form-control" >
+                        <option value="">Selecione um ônibus</option>
+                        <?php foreach ($dados['onibusList'] as $onibus): ?>
+                        <option value="<?= $onibus->getId(); ?>">
+                            <?= htmlspecialchars($onibus->getModelo()); ?> - Assentos:
+                            <?= htmlspecialchars($onibus->getTotalAssentos()); ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="txtSituacao">Situação:</label>
                     <select class="form-control" id="txtSituacao" name="situacao">
-                        <option value="disponível" <?php echo (isset($dados["viagem"]) && $dados["viagem"]->getSituacao() == "disponível" ? 'selected' : ''); ?>>Disponível</option>
-                        <option value="indisponível" <?php echo (isset($dados["viagem"]) && $dados["viagem"]->getSituacao() == "indisponível" ? 'selected' : ''); ?>>Indisponível</option>
+                        <option value="disponível"
+                            <?php echo (isset($dados["viagem"]) && $dados["viagem"]->getSituacao() == "disponível" ? 'selected' : ''); ?>>
+                            Disponível</option>
+                        <option value="indisponível"
+                            <?php echo (isset($dados["viagem"]) && $dados["viagem"]->getSituacao() == "indisponível" ? 'selected' : ''); ?>>
+                            Indisponível</option>
                     </select>
                 </div>
 
-                <input type="hidden" id="hddId" name="id"
-                    value="<?= $dados['id']; ?>" />
+
+
+                <input type="hidden" id="hddId" name="id" value="<?= $dados['id']; ?>" />
 
                 <button type="submit" class="btn btn-success">Gravar</button>
                 <button type="reset" class="btn btn-danger">Limpar</button>
@@ -78,8 +94,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
-            <a class="btn btn-secondary"
-                href="<?= BASEURL ?>/controller/ViagensController.php?action=list">Voltar</a>
+            <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/ViagensController.php?action=list">Voltar</a>
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@ class OnibusDAO {
         
         return $this->mapOnibus($result);
     }
-
+    
     // Método para buscar um ônibus por seu ID
     public function findById(int $id) {
         $conn = Connection::getConn();

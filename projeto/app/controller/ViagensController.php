@@ -82,9 +82,23 @@ class ViagensController extends Controller {
 
     protected function create() {
         $dados["id"] = 0;
+        
+        // Obtém o id do usuário logado
+        $usuarioId = $this->getIdUsuarioLogado();
+        
+        // Busca os ônibus associados a este usuário
+        $onibusDao = new OnibusDAO();
+        $dados['onibusList'] = $onibusDao->listByUsuario($usuarioId);
+        
+        // Adicione esta linha para depuração
+        if (empty($dados['onibusList'])) {
+            echo "Nenhum ônibus encontrado para o usuário.";
+        }
+        
+        // Carrega o formulário de criação de viagem
         $this->loadView("viagens/form.php", $dados);
-    
     }
+    
 
     private function findViagemById() {
         $id = isset($_GET['id']) ? $_GET['id'] : 0;
