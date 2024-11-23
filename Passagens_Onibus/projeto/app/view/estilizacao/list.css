@@ -1,0 +1,40 @@
+* {
+    color: white;
+}
+
+body {
+    background: linear-gradient(to left, #054798, #09d8df);
+    width: 100%;
+    min-height: 100vh; /* Para garantir que o fundo cubra toda a altura da tela */
+    margin: 0; /* Remove a margem padrão */
+}
+
+table {
+    width: 100%; /* Ajuste a largura da tabela */
+    border-collapse: collapse; /* Remove o espaço entre as células */
+    background: none; /* Fundo branco com leve transparência */
+    overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+    border-radius: 20px;
+}
+
+th {
+    border: none;
+    padding: 15px; /* Espaçamento em cima e embaixo */
+    font-weight: bold;
+    text-align: left; /* Alinha texto à esquerda */
+    border-radius: 20px;
+}
+
+td {
+    font-weight: bold;
+    border: none;
+    padding: 10px; /* Espaçamento interno das células */
+    text-align: left; /* Alinha texto à esquerda */
+    background-color: transparent; /* Mantém o fundo transparente para dados */
+    transition: background-color 0.3s; /* Suave transição de cor */
+}
+
+tr:hover td {
+    background-color: rgba(0, 79, 68, 0.2); /* Muda a cor de fundo ao passar o mouse */
+}
