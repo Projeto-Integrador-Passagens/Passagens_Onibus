@@ -3,16 +3,20 @@
 #Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
+if(isset($_SESSION[SESSAO_USUARIO_ID]))
+    require_once(__DIR__ . "/../include/menu.php");
 
 ?>
 <link rel="stylesheet" href="<?= BASEURL ?>/view/estilizacao/form.css">
 
-<h3 class="text-center fonte-branca inserir-usuario">
-    <?php if ($dados['id'] == 0) echo "Inserir";
-    else echo "Alterar"; ?>
-    Usuário
-</h3>
 <div class="container">
+
+    <h3 class="text-center fonte-branca inserir-usuario">
+        <?php if ($dados['id'] == 0) echo "Inserir";
+        else echo "Alterar"; ?>
+        Usuário
+    </h3>
+
     <form id="form" method="POST"
         action="<?= BASEURL ?>/controller/UsuarioController.php?action=save">
         <div class="form">

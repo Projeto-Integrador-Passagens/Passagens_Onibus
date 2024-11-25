@@ -26,13 +26,12 @@ require_once(__DIR__ . "/../include/menu.php");
             <table id="tabViagens" class=''>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Ônibus</th>
                         <th>Data e Horário</th>
                         <th>Origem</th>
                         <th>Destino</th>
                         <th>Preço</th>
-                        <th>Total de Passagens</th>
+                        <th>Passagens</th>
                         <th>Situação</th>
                         <th>Alterar</th>
                         <th>Excluir</th>
@@ -41,12 +40,11 @@ require_once(__DIR__ . "/../include/menu.php");
                 <tbody>
                     <?php foreach ($dados['lista'] as $viagem): ?>
                         <tr>
-                            <td><?php echo $viagem->getId(); ?></td>
                             <td><?= $viagem->getOnibus()->getId(); ?></td>
-                            <td><?= $viagem->getDataHorario(); ?></td>
+                            <td><?= $viagem->getDataHorarioFormatado(); ?></td>
                             <td><?= $viagem->getCidadeOrigem(); ?></td>
                             <td><?= $viagem->getCidadeDestino(); ?></td>
-                            <td><?= $viagem->getPreco(); ?></td>
+                            <td><?= $viagem->getPrecoFormato(); ?></td>
                             <td><?= $viagem->getTotalPassagens(); ?></td>
                             <td><?= $viagem->getSituacao(); ?></td>
                             <td><a class="btn btn-primary" href="<?= BASEURL ?>/controller/ViagensController.php?action=edit&id=<?= $viagem->getId() ?>">Alterar</a></td>

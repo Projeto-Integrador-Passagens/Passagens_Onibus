@@ -2,13 +2,16 @@
 # Classe controller para Viagens
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/ViagensDAO.php");
+require_once(__DIR__ . "/../dao/OnibusDAO.php");
 require_once(__DIR__ . "/../service/ViagensService.php");
 require_once(__DIR__ . "/../model/Viagens.php");
+require_once(__DIR__ . "/../model/enum/ViagemSituacao.php");
 
 class ViagensController extends Controller {
 
     private ViagensDAO $viagensDao;
     private ViagensService $viagensService;
+    private OnibusDAO $onibusDao;
 
     // Método construtor do controller - será executado a cada requisição a esta classe
     public function __construct() {
@@ -17,6 +20,7 @@ class ViagensController extends Controller {
 
         $this->viagensDao = new ViagensDAO();
         $this->viagensService = new ViagensService();
+        $this->onibusDao = new OnibusDAO();
 
         $this->handleAction();
     }
@@ -42,7 +46,7 @@ class ViagensController extends Controller {
         $cidadeDestino = trim($_POST['cidade_destino']) ? trim($_POST['cidade_destino']) : NULL;
         $preco = trim($_POST['preco']) ? trim($_POST['preco']) : NULL;
         $totalPassagens = trim($_POST['total_passagens']) ? trim($_POST['total_passagens']) : NULL;
-        $situacao = trim($_POST['situacao']) ? trim($_POST['situacao']) : NULL;
+        $onibusId = is_numeric($_POST['onibus_id']) ? $_POST['onibus_id'] : NULL;
 
         // Cria objeto Viagens
         $viagem = new Viagens();
@@ -51,10 +55,13 @@ class ViagensController extends Controller {
         $viagem->setCidadeDestino($cidadeDestino);
         $viagem->setPreco($preco);
         $viagem->setTotalPassagens($totalPassagens);
-        $viagem->setSituacao($situacao);
+        $viagem->setSituacao(ViagemSituacao::PROGRAMADA);
 
-        $viagem->setOnibus(new Onibus());
-        $viagem->getOnibus()->setId(2);
+        if($onibusId) {
+            $viagem->setOnibus(new Onibus());
+            $viagem->getOnibus()->setId($onibusId);
+        } else
+            $viagem->setOnibus(null);
 
         // Validar os dados
         $erros = $this->viagensService->validarDados($viagem);
@@ -80,12 +87,16 @@ class ViagensController extends Controller {
 
         // Se há erros, volta para o formulário
         $dados["viagem"] = $viagem;
+        $dados["onibusList"] = $this->onibusDao->listByUsuario($this->getIdUsuarioLogado());
+        
         $msgErros = implode("<br>", $erros);
         $this->loadView("viagens/form.php", $dados, $msgErros);
     }
 
     protected function create() {
         $dados["id"] = 0;
+        $dados["onibusList"] = $this->onibusDao->listByUsuario($this->getIdUsuarioLogado());
+
         $this->loadView("viagens/form.php", $dados);
     
     }
@@ -114,6 +125,8 @@ class ViagensController extends Controller {
             // Setar os dados
             $dados["id"] = $viagem->getId();
             $dados["viagem"] = $viagem;
+            $dados["onibusList"] = $this->onibusDao->listByUsuario($this->getIdUsuarioLogado());
+
             $this->loadView("viagens/form.php", $dados);
         } else {
             $this->list("Viagem não encontrada");

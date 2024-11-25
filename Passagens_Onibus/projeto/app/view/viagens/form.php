@@ -9,15 +9,15 @@ require_once(__DIR__ . "/../include/menu.php");
 <link rel="stylesheet" href="<?= BASEURL ?>/view/estilizacao/form.css">
 
 <div class="container">
-
+    <h3 class="text-center">
+        <?php if ($dados['id'] == 0) echo "Inserir";
+        else echo "Alterar"; ?>
+        Viagem
+    </h3>
+    
     <form id="form" method="POST"
         action="<?= BASEURL ?>/controller/ViagensController.php?action=save">
 
-        <h3 class="text-center">
-            <?php if ($dados['id'] == 0) echo "Inserir";
-            else echo "Alterar"; ?>
-            Viagem
-        </h3>
         <div class="form">
             <div class="form-left">
                 <div class="form-group">
@@ -60,19 +60,21 @@ require_once(__DIR__ . "/../include/menu.php");
 
                 <div class="form-group">
                     <label for="onibus_id">Ônibus:</label>
-                    <select name="onibus_id" id="onibus_id" class="form-control" >
+                    <select name="onibus_id" id="onibus_id" class="form-control">
                         <option value="">Selecione um ônibus</option>
                         <?php foreach ($dados['onibusList'] as $onibus): ?>
-                        <option value="<?= $onibus->getId(); ?>">
-                            <?= htmlspecialchars($onibus->getModelo()); ?> - Assentos:
-                            <?= htmlspecialchars($onibus->getTotalAssentos()); ?>
-                        </option>
+                            <option value="<?= $onibus->getId(); ?>"  
+                                <?= (isset($dados["viagem"]) && $dados["viagem"]->getOnibus() && $dados["viagem"]->getOnibus()->getId() == $onibus->getId())  ? 'selected' : ''; ?>>
+                                <?= htmlspecialchars($onibus->getModelo()); ?> - Assentos:
+                                <?= htmlspecialchars($onibus->getTotalAssentos()); ?>
+                            </option>
                         <?php endforeach; ?>
+                    </select>
                 </div>
+            </div>
 
             <input type="hidden" id="hddId" name="id"
                 value="<?= $dados['id']; ?>" />
-
         </div>
 
         <div class="btns">
@@ -82,7 +84,8 @@ require_once(__DIR__ . "/../include/menu.php");
                 href="<?= BASEURL ?>/controller/ViagensController.php?action=list">Voltar</a>
         </div>
     </form>
-    <div class="col-6">
+
+    <div class="col-12">
         <?php require_once(__DIR__ . "/../include/msg.php"); ?>
     </div>
 </div>

@@ -25,8 +25,14 @@ class ViagensService {
         if(!$viagem->getTotalPassagens())
             array_push($erros, "O campo [Total de Passagens] é obrigatório.");
 
-        if(!$viagem->getSituacao())
-            array_push($erros, "O campo [Situação] é obrigatório.");
+        if(!$viagem->getOnibus())
+            array_push($erros, "O campo [Ônibus] é obrigatório.");
+        else {
+            //TODO - Validar a capacidade do ônibuco com o total de passagens
+            
+        }
+
+
 
         return $erros;
     }

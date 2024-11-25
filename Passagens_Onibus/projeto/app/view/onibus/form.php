@@ -9,14 +9,16 @@ require_once(__DIR__ . "/../include/menu.php");
 <link rel="stylesheet" href="<?= BASEURL ?>/view/estilizacao/form.css">
 
 <div class="container">
+    <h3 class="text-center">
+        <?php if ($dados['id'] == 0) echo "Inserir";
+        else echo "Alterar"; ?>
+        Veiculo
+    </h3>
+
 
     <form id="form" method="POST"
         action="<?= BASEURL ?>/controller/OnibusController.php?action=save">
-        <h3 class="text-center">
-            <?php if ($dados['id'] == 0) echo "Inserir";
-            else echo "Alterar"; ?>
-            Ônibus
-        </h3>
+
         <div class="form-group">
             <label for="txtModelo">Modelo:</label>
             <input class="form-control" type="text" id="txtModelo" name="modelo"

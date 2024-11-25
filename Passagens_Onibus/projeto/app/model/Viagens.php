@@ -32,6 +32,14 @@ class Viagens {
         return $this->data_horario;
     }
 
+    public function getDataHorarioFormatado(): ?string
+    {
+        if($this->data_horario)
+            return date_format(new DateTime($this->data_horario), 'd/m/Y à\s H:i');
+
+        return "";
+    }
+
     public function setDataHorario(?string $data_horario): self
     {
         $this->data_horario = $data_horario;
@@ -63,6 +71,14 @@ class Viagens {
     public function getPreco(): ?float
     {
         return $this->preco;
+    }
+
+    public function getPrecoFormato(): ?string
+    {
+        if($this->preco)        
+            return "R$ " . number_format($this->preco, 2, ",", ".");
+    
+        return "";
     }
 
     public function setPreco(?float $preco): self
