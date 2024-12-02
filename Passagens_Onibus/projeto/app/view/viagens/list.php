@@ -26,7 +26,7 @@ require_once(__DIR__ . "/../include/menu.php");
             <table id="tabViagens" class=''>
                 <thead>
                     <tr>
-                        <th>Ônibus</th>
+                        <th>Veiculo</th>
                         <th>Data e Horário</th>
                         <th>Origem</th>
                         <th>Destino</th>

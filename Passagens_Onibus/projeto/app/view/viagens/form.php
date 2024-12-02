@@ -59,9 +59,9 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
 
                 <div class="form-group">
-                    <label for="onibus_id">Ônibus:</label>
+                    <label for="onibus_id">Veiculo:</label>
                     <select name="onibus_id" id="onibus_id" class="form-control">
-                        <option value="">Selecione um ônibus</option>
+                        <option value="">Selecione um veiculo</option>
                         <?php foreach ($dados['onibusList'] as $onibus): ?>
                             <option value="<?= $onibus->getId(); ?>"  
                                 <?= (isset($dados["viagem"]) && $dados["viagem"]->getOnibus() && $dados["viagem"]->getOnibus()->getId() == $onibus->getId())  ? 'selected' : ''; ?>>

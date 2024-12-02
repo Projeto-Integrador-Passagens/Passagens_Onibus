@@ -19,7 +19,8 @@ class Connection {
 
         $options = array(
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", //Define o charset
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION); //Define o tipo de exceção
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //Define o tipo de exceção
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC); 
         
         try{ 
             #$conn = new PDO("mysql:host=XXXX;dbname=XXX", "root", "root", array());

@@ -5,48 +5,52 @@
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Viagens.php");
 
-class ViagensDAO {
+class ViagensDAO
+{
 
-  // Método para listar os viagem a partir da base de dados
-  public function listByUsuario($idUsuario) {
-    $conn = Connection::getConn();
+    // Método para listar os viagem a partir da base de dados
+    public function listByUsuario($idUsuario)
+    {
+        $conn = Connection::getConn();
 
-    $sql = "SELECT * FROM viagens ORDER BY data_horario";
-    $stm = $conn->prepare($sql);    
-    $stm->execute();
-    $result = $stm->fetchAll();
-    
-    return $this->mapViagens($result);
-}
+        $sql = "SELECT * FROM viagens ORDER BY data_horario";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $this->mapViagens($result);
+    }
 
     // Método para buscar uma viagem por seu ID
-    public function findById(int $id) {
+    public function findById(int $id)
+    {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM viagens WHERE id = ?";
-        $stm = $conn->prepare($sql);    
+        $stm = $conn->prepare($sql);
         $stm->execute([$id]);
         $result = $stm->fetchAll();
 
         $viagens = $this->mapViagens($result);
 
-        if(count($viagens) == 1)
+        if (count($viagens) == 1)
             return $viagens[0];
-        elseif(count($viagens) == 0)
+        elseif (count($viagens) == 0)
             return null;
 
         die("ViagensDAO.findById() - Erro: mais de uma viagem encontrada.");
     }
 
-    public function cadastrarViagem(Viagens $viagens) {
+    public function cadastrarViagem(Viagens $viagens)
+    {
         $conn = Connection::getConn();
-    
+
         // Consulta para inserir uma nova viagem
         $sql = "INSERT INTO viagens (onibus_id, data_horario, cidade_origem, cidade_destino, preco, total_passagens, situacao)" .
-               " VALUES (:onibus_id, :data_horario, :cidade_origem, :cidade_destino, :preco, :total_passagens, :situacao)";
-        
+            " VALUES (:onibus_id, :data_horario, :cidade_origem, :cidade_destino, :preco, :total_passagens, :situacao)";
+
         $stm = $conn->prepare($sql);
-        
+
         // Vincula os parâmetros
         $stm->bindValue(":onibus_id", $viagens->getOnibus()->getId());
         $stm->bindValue(":data_horario", $viagens->getDataHorario());
@@ -55,31 +59,33 @@ class ViagensDAO {
         $stm->bindValue(":preco", $viagens->getPreco());
         $stm->bindValue(":total_passagens", $viagens->getTotalPassagens());
         $stm->bindValue(":situacao", $viagens->getSituacao());
-        
+
         // Executa a consulta
         $stm->execute();
     }
     // Método para validar capacidade maxima 
-    public function getCapacidadeById($onibusId) {
+    public function getCapacidadeById($onibusId)
+    {
         $conn = Connection::getConn();
-        
+
         $sql = "SELECT capacidade FROM onibus WHERE id = :onibusId";
         $stm = $conn->prepare($sql);
         $stm->bindParam(":onibusId", $onibusId, PDO::PARAM_INT);
         $stm->execute();
-        
+
         $result = $stm->fetch();
-        
+
         return $result ? $result['capacidade'] : null;
     }
 
     // Método para atualizar uma viagem
-    public function update(Viagens $viagem) {
+    public function update(Viagens $viagem)
+    {
         $conn = Connection::getConn();
 
         $sql = "UPDATE viagens SET data_horario = :data_horario, cidade_origem = :cidade_origem, cidade_destino = :cidade_destino," .
-               " preco = :preco, total_passagens = :total_passagens, situacao = :situacao WHERE id = :id";
-        
+            " preco = :preco, total_passagens = :total_passagens, situacao = :situacao WHERE id = :id";
+
         $stm = $conn->prepare($sql);
         $stm->bindValue("data_horario", $viagem->getDataHorario());
         $stm->bindValue("cidade_origem", $viagem->getCidadeOrigem());
@@ -93,18 +99,32 @@ class ViagensDAO {
     }
 
     // Método para excluir uma viagem pelo seu ID
-    public function deleteById(int $id) {
+    public function deleteById(int $id)
+    {
         $conn = Connection::getConn();
 
         $sql = "DELETE FROM viagens WHERE id = :id";
-        
+
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
         $stm->execute();
     }
-    
+
+    public function listOrigens() {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT DISTINCT v.cidade_origem FROM viagens v ORDER BY v.cidade_origem";
+
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $cidades = $stm->fetchAll();
+
+        return $cidades;
+    }
+
     // Método para converter um registro da base de dados em um objeto Viagens
-    private function mapViagens($result) {
+    private function mapViagens($result)
+    {
         $viagens = array();
         foreach ($result as $reg) {
             $viagem = new Viagens();
@@ -126,4 +146,3 @@ class ViagensDAO {
         return $viagens;
     }
 }
-
