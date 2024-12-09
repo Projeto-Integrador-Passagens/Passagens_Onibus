@@ -4,6 +4,7 @@
 
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Viagens.php");
+include_once(__DIR__ . "/../model/enum/ViagemSituacao.php");
 
 class ViagensDAO
 {
@@ -16,6 +17,41 @@ class ViagensDAO
         $sql = "SELECT * FROM viagens ORDER BY data_horario";
         $stm = $conn->prepare($sql);
         $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $this->mapViagens($result);
+    }
+
+    // Método para listar as viagens disponíveis (PROGRAMADAS) a partir da base de dados
+    public function listViagensDisp($origem, $destino, $data)
+    {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT v.*, o.modelo onibus_modelo, o.marca onibus_marca, u.nome  
+            FROM viagens v
+            JOIN onibus o ON (o.id = v.onibus_id)
+            JOIN usuarios u ON (u.id = o.usuarios_id)
+            WHERE v.situacao = ?";
+        if($origem)
+            $sql .= " AND v.cidade_origem = ?";
+        if($destino)
+            $sql .= " AND v.cidade_destino = ?";
+        if($data)
+            $sql .= " AND DATE(v.data_horario) = ?";
+        $sql .= " ORDER BY v.data_horario";
+
+        $stm = $conn->prepare($sql);
+
+        $parametros = [ViagemSituacao::PROGRAMADA];
+        if($origem)
+            array_push($parametros, $origem);
+        if($destino)
+            array_push($parametros, $destino);
+        if($data)
+            array_push($parametros, $data);
+
+        $stm->execute($parametros);
+
         $result = $stm->fetchAll();
 
         return $this->mapViagens($result);
@@ -113,10 +149,13 @@ class ViagensDAO
     public function listOrigens() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT DISTINCT v.cidade_origem FROM viagens v ORDER BY v.cidade_origem";
+        $sql = "SELECT DISTINCT v.cidade_origem , v.cidade_destino
+                FROM viagens v 
+                WHERE situacao = ?
+                ORDER BY v.cidade_origem, v.cidade_destino";
 
         $stm = $conn->prepare($sql);
-        $stm->execute();
+        $stm->execute([ViagemSituacao::PROGRAMADA]);
         $cidades = $stm->fetchAll();
 
         return $cidades;
@@ -138,6 +177,14 @@ class ViagensDAO
 
             $onibus = new Onibus();
             $onibus->setId($reg['onibus_id']);
+            if(isset($reg['onibus_modelo'])) {
+                $onibus->setModelo($reg['onibus_modelo']);
+                $onibus->setMarca($reg['onibus_marca']);
+            }
+            if(isset($reg['onibus_modelo'])) {
+                $onibus->setModelo($reg['onibus_modelo']);
+                $onibus->setMarca($reg['onibus_marca']);
+            }
             $viagem->setOnibus($onibus);
 
             array_push($viagens, $viagem);

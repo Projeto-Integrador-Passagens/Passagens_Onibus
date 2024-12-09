@@ -2,6 +2,8 @@
 # Nome do arquivo: Onibus.php
 # Objetivo: classe Model para Onibus
 
+include_once(__DIR__ . "/Usuario.php");
+
 class Onibus {
 
     private ?int $id;
@@ -9,6 +11,11 @@ class Onibus {
     private ?string $marca;
     private ?int $totalAssentos;
     private ?int $usuariosId;
+    private ?Usuario $usuario;
+
+    public function getInfo() {
+        return $this->modelo . " (" . $this->marca . ")";
+    }
 
     public function getId(): ?int
     {
@@ -70,5 +77,15 @@ class Onibus {
         return $this;
     }
 
-    
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
 }

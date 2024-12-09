@@ -26,7 +26,6 @@ require_once(__DIR__ . "/../include/menu.php");
             <table id="tabViagens" class=''>
                 <thead>
                     <tr>
-                        <th>Veiculo</th>
                         <th>Data e Horário</th>
                         <th>Origem</th>
                         <th>Destino</th>
@@ -40,7 +39,6 @@ require_once(__DIR__ . "/../include/menu.php");
                 <tbody>
                     <?php foreach ($dados['lista'] as $viagem): ?>
                         <tr>
-                            <td><?= $viagem->getOnibus()->getId(); ?></td>
                             <td><?= $viagem->getDataHorarioFormatado(); ?></td>
                             <td><?= $viagem->getCidadeOrigem(); ?></td>
                             <td><?= $viagem->getCidadeDestino(); ?></td>
