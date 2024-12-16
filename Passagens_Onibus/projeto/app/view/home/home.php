@@ -30,8 +30,8 @@ require_once(__DIR__ . "/../include/menu.php");
                         </select>
                     </div>
                     <div class="col-3">
-                        <label for="origem">Destino:</label>
-                        <select id="origem" class="form-control" name="origem">
+                        <label for="destino">Destino:</label>
+                        <select id="destino" class="form-control" name="destino">
                             <option value="">Selecione...</option>
                             <?php foreach ($dados['listaCidadeDestino'] as $cidade): ?>
                                 <option value="<?= $cidade['cidade_destino'] ?>"><?= $cidade['cidade_destino'] ?></option>
@@ -75,7 +75,7 @@ require_once(__DIR__ . "/../include/menu.php");
                             <td><?= $viagem->getCidadeDestino(); ?></td>
                             <td><?= $viagem->getPrecoFormato(); ?></td>
                             <td><?= $viagem->getTotalPassagens(); ?></td>
-                            <td><a class="btn btn-success" href="<?= BASEURL ?>/controller/VendasController.php?action=vender&id_viagem=<?= $viagem->getId() ?>">Comprar</a></td>
+                            <td><a class="btn btn-success" href="<?= BASEURL ?>/controller/PassagemController.php?action=vender&id_viagem=<?= $viagem->getId() ?>">Comprar</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

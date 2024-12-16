@@ -45,9 +45,12 @@ CREATE TABLE `passagens` (
   `id` int NOT NULL,
   `viagens_id` int NOT NULL,
   `usuarios_id` int NOT NULL,
-  `forma_pagamento` enum('PIX','DINHEIRO','CARTAO') NOT NULL,
   `comentario` text,
-  `avaliacao` int DEFAULT NULL
+  `avaliacao` int DEFAULT NULL,
+  nome VARCHAR(70) NOT NULL,
+  cpf VARCHAR(20) NOT NULL,
+  data_venda DATE NOT NULL,
+  status ENUM('EM ANDAMENTO', 'PAGO') NOT NULL
 );
 
 -- --------------------------------------------------------
