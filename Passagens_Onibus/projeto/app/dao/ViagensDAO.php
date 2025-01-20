@@ -149,10 +149,25 @@ class ViagensDAO
     public function listOrigens() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT DISTINCT v.cidade_origem , v.cidade_destino
+        $sql = "SELECT DISTINCT v.cidade_origem
                 FROM viagens v 
                 WHERE situacao = ?
-                ORDER BY v.cidade_origem, v.cidade_destino";
+                ORDER BY v.cidade_origem";
+
+        $stm = $conn->prepare($sql);
+        $stm->execute([ViagemSituacao::PROGRAMADA]);
+        $cidades = $stm->fetchAll();
+
+        return $cidades;
+    }
+
+    public function listDestinos() {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT DISTINCT v.cidade_destino
+                FROM viagens v 
+                WHERE situacao = ?
+                ORDER BY v.cidade_destino";
 
         $stm = $conn->prepare($sql);
         $stm->execute([ViagemSituacao::PROGRAMADA]);

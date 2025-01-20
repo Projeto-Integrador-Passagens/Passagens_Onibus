@@ -18,6 +18,11 @@ class ViagensController extends Controller {
         if(! $this->usuarioLogado())
             exit;
 
+        if(! $this->usuarioIsMotorista()) {
+            echo "Acesso negado!";
+            exit;
+        }
+
         $this->viagensDao = new ViagensDAO();
         $this->viagensService = new ViagensService();
         $this->onibusDao = new OnibusDAO();

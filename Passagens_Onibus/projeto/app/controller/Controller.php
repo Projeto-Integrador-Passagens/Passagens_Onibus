@@ -85,5 +85,27 @@ class Controller {
         return 0;
     }
 
+    protected function usuarioIsMantenedor() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        if($_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MANTENEDOR)
+            return true;
+
+        return false;
+    }
+
+    protected function usuarioIsMotorista() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        if($_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MOTORISTA)
+            return true;
+
+        return false;
+    }
+
 
 }

@@ -27,6 +27,11 @@ class UsuarioController extends Controller {
         if(! $this->usuarioLogado())
             exit;
 
+        if(! $this->usuarioIsMantenedor()) {
+            echo "Acesso negado!";
+            exit;
+        }
+
         $usuarios = $this->usuarioDao->list();
         //print_r($usuarios);
         $dados["lista"] = $usuarios;
@@ -135,6 +140,11 @@ class UsuarioController extends Controller {
     
     //metodo excluir
     protected function delete() {
+        if(! $this->usuarioIsMantenedor()) {
+            echo "Acesso negado!";
+            exit;
+        }
+
         $usuario = $this->findUsuarioById();
         if($usuario) {
             //Excluir
@@ -147,22 +157,27 @@ class UsuarioController extends Controller {
         }               
     }
 
-   //Método edit
-   protected function edit() {
-    $usuario = $this->findUsuarioById();
-    
-    if($usuario) {
-        //Setar os dados
-        $dados["id"] = $usuario->getId();
-        $dados["usuario"] = $usuario;
-        $dados["confSenha"] = $usuario->getSenha();
-        $dados["tipos"] = Tipo::getAllAsArray();
-        $dados["situacoes"] = UsuarioSituacao::getAllAsArray();
+    //Método edit
+    protected function edit() {
+        if(! $this->usuarioIsMantenedor()) {
+            echo "Acesso negado!";
+            exit;
+        }
 
-        $this->loadView("usuario/form.php", $dados);
-    } else 
-        $this->list("Usuário não encontrado");
-}
+        $usuario = $this->findUsuarioById();
+        
+        if($usuario) {
+            //Setar os dados
+            $dados["id"] = $usuario->getId();
+            $dados["usuario"] = $usuario;
+            $dados["confSenha"] = $usuario->getSenha();
+            $dados["tipos"] = Tipo::getAllAsArray();
+            $dados["situacoes"] = UsuarioSituacao::getAllAsArray();
+
+            $this->loadView("usuario/form.php", $dados);
+        } else 
+            $this->list("Usuário não encontrado");
+    }
 
 }
 

@@ -15,6 +15,11 @@ class OnibusController extends Controller {
         if(! $this->usuarioLogado())
             exit;
 
+        if(! $this->usuarioIsMotorista()) {
+            echo "Acesso negado!";
+            exit;
+        }
+            
         $this->onibusDao = new OnibusDAO();
         $this->onibusService = new OnibusService();
 

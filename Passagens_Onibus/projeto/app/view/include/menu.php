@@ -95,6 +95,7 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
         <img src="<?= BASEURL ?>/assets/logo.png" alt="Logo">
         MARTINBUS
     </a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" 
             aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -106,19 +107,30 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                 <a class="nav-link" href="<?= HOME_PAGE ?>">Home</a>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"> Cadastros </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" 
-                        href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
-                    <a class="dropdown-item" 
-                        href="<?= BASEURL . '/controller/OnibusController.php?action=list' ?>">Veículos</a>
-                    <a class="dropdown-item" 
-                        href="<?= BASEURL . '/controller/ViagensController.php?action=list' ?>">Viagens</a>
-                </div>
-            </li>
+            <?php if($_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MANTENEDOR || $_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MOTORISTA): ?>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> Cadastros </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <?php if($_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MANTENEDOR): ?>
+                            <a class="dropdown-item" 
+                                href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+                        <?php endif; ?>
+                        
+                        <?php if($_SESSION[SESSAO_USUARIO_TIPO] == Tipo::MOTORISTA): ?>
+                            <a class="dropdown-item" 
+                                href="<?= BASEURL . '/controller/OnibusController.php?action=list' ?>">Veículos</a>
+                            <a class="dropdown-item" 
+                                href="<?= BASEURL . '/controller/ViagensController.php?action=list' ?>">Viagens</a>
+                        <?php endif; ?>
+                            
+                    </div>
+                </li>
+            
+            <?php endif; ?>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= LOGOUT_PAGE ?>">Sair</a>

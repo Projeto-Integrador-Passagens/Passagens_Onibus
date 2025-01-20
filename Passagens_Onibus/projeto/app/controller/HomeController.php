@@ -35,7 +35,7 @@ class HomeController extends Controller {
         
         $dados['listaCidadeOrigem'] = $this->viagensDao->listOrigens();
 
-        $dados['listaCidadeDestino'] = $this->viagensDao->listOrigens();
+        $dados['listaCidadeDestino'] = $this->viagensDao->listDestinos();
 
 
         $this->loadView("home/home.php", $dados);
