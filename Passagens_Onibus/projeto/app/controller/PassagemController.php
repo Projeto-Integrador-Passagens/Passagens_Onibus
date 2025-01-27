@@ -3,66 +3,73 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/PassagemDAO.php");
 require_once(__DIR__ . "/../dao/ViagensDAO.php");
-//require_once(__DIR__ . "/../service/VendaService.php");
+require_once(__DIR__ . "/../service/PassagemService.php");
 require_once(__DIR__ . "/../model/Passagem.php");
 require_once(__DIR__ . "/../model/Viagens.php");
 
 class PassagemController extends Controller {
 
-    private PassagemDAO $pasasgemDao;
+    private PassagemDAO $passagemDao;
     private ViagensDAO $viagemDao;
-    //private VendaService $vendaService;
+    private PassagemService $passagemService;
 
     // Construtor
     public function __construct() {
-        $this->pasasgemDao = new PassagemDAO();
+        $this->passagemDao = new PassagemDAO();
         $this->viagemDao = new ViagensDAO();
-        //$this->vendaService = new VendaService();
+        $this->passagemService = new PassagemService();
 
         $this->handleAction();
     }
 
-    // Método para listar vendas
-    protected function list(string $msgErro = "", string $msgSucesso = "") {
-        if (!$this->usuarioLogado()) exit;
-
-        $vendas = $this->pasasgemDao->list();
-        $dados["lista"] = $vendas;
-
-        $this->loadView("venda/list.php", $dados, $msgErro, $msgSucesso);
-    }
-
     // Método para vender passagem
-    protected function vender() {
+    protected function vender($idViagem=0, $msgErro = "") {
         if (!$this->usuarioLogado()) 
             exit;
 
-        $idViagem = isset($_GET['id_viagem']) ? $_GET['id_viagem'] : 0;
+        if(! $idViagem)
+            $idViagem = isset($_GET['id_viagem']) ? $_GET['id_viagem'] : 0;
 
         // Buscar detalhes da viagem
         $viagem = $this->viagemDao->findById($idViagem);
         if (!$viagem) {
-            $this->list("Viagem não encontrada.");
-            return;
+            echo "Viagem não encontrada.";
+            exit;
         }
 
 
         $dados["viagem"] = $viagem;
-        $this->loadView("passagem/form.php", $dados);
+        $this->loadView("passagem/form.php", $dados, $msgErro);
+    }
 
-        /*
-        $venda = new Venda();
-        $venda->setViagem($viagem);
-        $venda->setQuantidade($quantidade);
-        $venda->setUsuario($this->getUsuarioLogado());
+    public function salvarCompra() {
+$idViagem = isset($_POST['viagens_id']) ? $_POST['viagens_id'] : 0;  // A captura do ID da viagem
+    $nome = isset($_POST['nome']) ? trim($_POST['nome']) : NULL;  // Captura e limpa o nome do passageiro
+    $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : NULL;  // Captura e limpa o CPF do passageiro
+
+
+        $passagem = new Passagem();
+        $passagem->setNome($nome);
+        $passagem->setCpf($cpf);
+
+        $viagem = new Viagens();
+
+        $passagem->setViagem($viagem);
+
+        $usuario = new Usuario();
+        $usuario->setId($this->getIdUsuarioLogado());
+        $passagem->setUsuario($usuario);
+
 
         // Validar a venda
-        $erros = $this->vendaService->validarVenda($venda);
+        $erros = $this->passagemService->validarVenda($passagem);
 
         if (empty($erros)) {
             try {
-                $this->vendaDao->realizarVenda($venda);
-                $this->list("", "Venda realizada com sucesso!");
+                $this->passagemDao->insert($passagem);
+                
+                //Redirecionamento para a página de acompanhamento das passagens
+                header("location: " . BASEURL . "/controller/PassagemController.php?action=listarPedidosUsuario");
             } catch (PDOException $e) {
                 $erros[] = "Erro ao processar a venda: " . $e->getMessage();
             }
@@ -70,50 +77,29 @@ class PassagemController extends Controller {
 
         if (!empty($erros)) {
             $msgsErro = implode("<br>", $erros);
-            $dados["venda"] = $venda;
-            
+            $this->vender($idViagem, $msgsErro);            
         }
-        */
+
+
     }
 
-    // Método para criar um novo formulário de venda
-    protected function create() {
-        $dados["viagens"] = $this->vendaDao->listarViagensDisponiveis();
-        $this->loadView("venda/form.php", $dados);
+    private function listarPedidosUsuario() {
+        echo "Chamou listarPedidosUsuario";
+        exit;
     }
+
+    private function listarPedidosMotorista() {
+        echo "Chamou listarPedidosMostorista";
+        exit;
+    }
+
 
     // Método para buscar uma venda pelo ID
     private function findVendaById() {
         $id = isset($_GET['id']) ? $_GET['id'] : 0;
-        return $this->vendaDao->findById($id);
+        return $this->passagemDao->findById($id);
     }
 
-    // Método para excluir uma venda
-    protected function delete() {
-        $venda = $this->findVendaById();
-        if ($venda) {
-            $this->vendaDao->deleteById($venda->getId());
-            $this->list("", "Venda excluída com sucesso!");
-        } else {
-            $this->list("Venda não encontrada!");
-        }
-    }
-
-    // Método para editar uma venda
-    protected function edit() {
-        $venda = $this->findVendaById();
-
-        if ($venda) {
-            $dados["id"] = $venda->getId();
-            $dados["venda"] = $venda;
-            $dados["viagens"] = $this->vendaDao->listarViagensDisponiveis();
-
-            $this->loadView("venda/form.php", $dados);
-        } else {
-            $this->list("Venda não encontrada");
-        }
-    }
 }
-
 # Criar objeto da classe para executar o construtor
 new PassagemController();

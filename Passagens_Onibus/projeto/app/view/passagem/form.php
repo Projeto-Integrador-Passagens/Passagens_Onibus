@@ -38,18 +38,8 @@ if(isset($_SESSION[SESSAO_USUARIO_ID]))
 
     </div>
 
-    <form id="formVenda" method="POST" action="<?= BASEURL ?>/controller/PasasgemController.php?action=salvarComprar ?>">
-        <div class="form">
-            <div class="form-group">
-                <label for="numberQuantidade">Quantidade de Passagens:</label>
-                <input class="form-control" type="number" id="numberQuantidade" name="quantidade"
-                    placeholder="Informe a quantidade de passagens" required min="1" />
-            </div>
-
-            <div class="form-group">
-                <label for="txtTotal">Valor Total:</label>
-                <input class="form-control" type="text" id="txtTotal" name="total" readonly />
-            </div>
+    <form id="formVenda" method="POST" action="<?= BASEURL ?>/controller/PassagemController.php?action=salvarCompra">
+        
 
             <!-- Dados dos passageiros -->
 
@@ -70,7 +60,7 @@ if(isset($_SESSION[SESSAO_USUARIO_ID]))
 
 
 
-        </div>
+        
 
         <div class="btns">
             <button type="submit" class="btn btn-success">Confirmar</button>
@@ -83,20 +73,6 @@ if(isset($_SESSION[SESSAO_USUARIO_ID]))
     </div>
 
 </div>
-
-<script>
-    // Atualiza o valor total automaticamente com base na quantidade
-    const quantidadeInput = document.getElementById('numberQuantidade');
-    const precoInput = document.getElementById('txtPreco');
-    const totalInput = document.getElementById('txtTotal');
-
-    quantidadeInput.addEventListener('input', function() {
-        const quantidade = parseInt(quantidadeInput.value) || 0;
-        const preco = parseFloat(precoInput.value.replace('R$', '').replace(',', '.')) || 0;
-        const total = quantidade * preco;
-        totalInput.value = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    });
-</script>
 
 <?php
 require_once(__DIR__ . "/../include/footer.php");

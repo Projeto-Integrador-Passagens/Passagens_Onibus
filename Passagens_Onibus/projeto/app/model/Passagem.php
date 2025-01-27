@@ -3,14 +3,18 @@
 #Objetivo: classe Model para Venda
 
 require_once(__DIR__ . '/Viagens.php');
+require_once(__DIR__ . '/Usuario.php');
 
 class Passagem {
 
     private ?int $id;
-    private ?float $valor;
     private ?string $nome;
     private ?string $cpf;
     private $dataVenda;
+
+    private ?Usuario $usuario;
+    private ?Viagens $viagem;
+
   
     public function getId(): ?int
     {
@@ -24,14 +28,14 @@ class Passagem {
         return $this;
     }
     
-    public function getValor(): ?float
+    public function getQuantidade(): ?int
     {
-        return $this->valor;
+        return $this->id;   
     }
 
-    public function setValor(?float $valor): self
+    public function setQuantidade(?int $id): self
     {
-        $this->valor = $valor;
+        $this->id = $id;
 
         return $this;
     }
@@ -48,17 +52,11 @@ class Passagem {
         return $this;
     }
 
-    /**
-     * Get the value of nome
-     */
     public function getNome(): ?string
     {
         return $this->nome;
     }
 
-    /**
-     * Set the value of nome
-     */
     public function setNome(?string $nome): self
     {
         $this->nome = $nome;
@@ -66,20 +64,38 @@ class Passagem {
         return $this;
     }
 
-    /**
-     * Get the value of cpf
-     */
     public function getCpf(): ?string
     {
         return $this->cpf;
     }
 
-    /**
-     * Set the value of cpf
-     */
     public function setCpf(?string $cpf): self
     {
         $this->cpf = $cpf;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function getViagem(): ?Viagens
+    {
+        return $this->viagem;
+    }
+
+    public function setViagem(?Viagens $viagem): self
+    {
+        $this->viagem = $viagem;
 
         return $this;
     }

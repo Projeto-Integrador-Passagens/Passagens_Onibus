@@ -29,44 +29,45 @@ class PassagemDAO {
         $stm->execute([$id]);
         $result = $stm->fetchAll();
 
-        $vendas = $this->mapVendas($result);
+        $passagem = $this->mapVendas($result);
 
-        if(count($vendas) == 1)
-            return $vendas[0];
-        elseif(count($vendas) == 0)
+        if(count($passagem) == 1)
+            return $passagem[0];
+        elseif(count($passagem) == 0)
             return null;
 
-        die("VendaDAO.findById()" . 
+        die("PassagemDAO.findById()" . 
             " - Erro: mais de uma venda encontrada.");
     }
 
     //Método para inserir uma Venda
-    public function insert(Passagem $venda) {
+    public function insert(Passagem $passagem) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO vendas (preco, quantidade, data)" .
-               " VALUES (:preco, :quantidade, :data)";
+        $sql = "INSERT INTO passagens (viagens_id, usuarios_id, nome, cpf, data_venda)" .
+               " VALUES (:viagens_id, :usuarios_id, :nome, :cpf, CURRENT_DATE)";
         
         $stm = $conn->prepare($sql);
-        $stm->bindValue("preco", $venda->getValor());
-        $stm->bindValue("quantidade", $venda->getQuantidade());
-        $stm->bindValue("data", $venda->getDataVenda());
+        $stm->bindValue("viagens_id", $passagem->getViagem()->getId());
+        $stm->bindValue("usuarios_id", $passagem->getUsuario()->getId());
+        $stm->bindValue("nome", $passagem->getNome());
+        $stm->bindValue("cpf", $passagem->getCpf());
         $stm->execute();
     }
 
     //Método para atualizar uma Venda
-    public function update(Passagem $venda) {
+    public function update(Passagem $passagem) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE vendas SET preco = :preco, quantidade = :quantidade," . 
+        $sql = "UPDATE passagens SET preco = :preco, quantidade = :quantidade," . 
                 "data = :data" .   
                " WHERE id = :id";
         
         $stm = $conn->prepare($sql);
-        $stm->bindValue("preco", $venda->getValor());
-        $stm->bindValue("quantidade", $venda->getQuantidade());
-        $stm->bindValue("data", $venda->getDataVenda());
-        $stm->bindValue("id", $venda->getId());
+        $stm->bindValue("preco", $passagem->getValor());
+        $stm->bindValue("quantidade", $passagem->getQuantidade());
+        $stm->bindValue("data", $passagem->getDataVenda());
+        $stm->bindValue("id", $passagem->getId());
 
         $stm->execute();
     }
@@ -75,7 +76,7 @@ class PassagemDAO {
     public function deleteById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "DELETE FROM vendas WHERE id = :id";
+        $sql = "DELETE FROM passage WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
@@ -84,18 +85,18 @@ class PassagemDAO {
     
     //Método para converter um registro da base de dados em um objeto Venda
     private function mapVendas($result) {
-        $vendas = array();
+        $passagem = array();
         foreach ($result as $reg) {
-            $venda = new Passagem();
-            $venda->setId($reg['id']);
-            $venda->setValor($reg['preco']);
-            $venda->setQuantidade($reg['quantidade']);
-            $venda->setDataVenda($reg['data']);
+            $passagem = new Passagem();
+            $passagem->setId($reg['id']);
+            $passagem->setValor($reg['preco']);
+            $passagem->setQuantidade($reg['quantidade']);
+            $passagem->setDataVenda($reg['data']);
 
-            array_push($vendas, $venda);
+            array_push($passagems, $passagem);
         }
 
-        return $vendas;
+        return $passagems;
     }
 
 }
