@@ -1,0 +1,75 @@
+body {
+    background-image: url(../../assets/martinbus.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh; /* Para garantir que o fundo cubra toda a altura da tela */
+    margin: 0; /* Remove a margem padrão */
+}
+
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 75px;
+}
+
+.form-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-right {
+    display: flex;
+    flex-direction: column;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    border: none;
+    border-radius: 20px;
+    border: 2px solid white;
+    box-shadow: 2px 3px 20px black;
+    padding: 20px;
+}
+
+.form {
+    gap: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-control {
+    color: white;
+    background: none;
+    border: 2px solid #054798;
+    border-radius: 15px;
+}
+
+.form-control:focus {
+    color: white;
+}
+
+.form-control::placeholder{
+    color: white;
+}
+
+option{
+    color: black;
+}
+
+.form-control:focus {
+    background: none;
+    border: 2px solid #09d8df;
+}
+
+.msg {
+    margin-top: 20px;
+}

@@ -1,0 +1,51 @@
+* {
+    color: white;
+}
+
+body {
+    background-image: url(../../assets/martinbus.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh; 
+    margin: 0;
+}
+
+.container {
+    margin-top: 150px;
+}
+
+table {
+    width: 100%; /* Ajuste a largura da tabela */
+    border-collapse: collapse; /* Remove o espaço entre as células */
+    background: none; /* Fundo branco com leve transparência */
+    overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+    border-radius: 20px;
+}
+
+th {
+    border: none;
+    padding: 15px; /* Espaçamento em cima e embaixo */
+    font-weight: bold;
+    text-align: left; /* Alinha texto à esquerda */
+    border-radius: 20px;
+}
+
+td {
+    font-weight: bold;
+    border: none;
+    padding: 10px; /* Espaçamento interno das células */
+    text-align: left; /* Alinha texto à esquerda */
+    background-color: transparent; /* Mantém o fundo transparente para dados */
+    transition: background-color 0.3s; /* Suave transição de cor */
+}
+
+tr:hover td {
+    background-color: rgba(0, 79, 68, 0.2); /* Muda a cor de fundo ao passar o mouse */
+}
+
+#destino option {
+    color: black;
+}
