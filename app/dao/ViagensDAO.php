@@ -14,8 +14,13 @@ class ViagensDAO
     {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM viagens ORDER BY data_horario";
+        $sql = "SELECT v.* 
+                FROM viagens v
+                JOIN onibus o ON v.onibus_id = o.id
+                WHERE o.usuarios_id = :idUsuario 
+                ORDER BY situacao = 'PROGRAMADA' DESC, data_horario ASC";
         $stm = $conn->prepare($sql);
+        $stm->bindValue("idUsuario", $idUsuario);
         $stm->execute();
         $result = $stm->fetchAll();
 
@@ -32,22 +37,22 @@ class ViagensDAO
             JOIN onibus o ON (o.id = v.onibus_id)
             JOIN usuarios u ON (u.id = o.usuarios_id)
             WHERE v.situacao = ?";
-        if($origem)
+        if ($origem)
             $sql .= " AND v.cidade_origem = ?";
-        if($destino)
+        if ($destino)
             $sql .= " AND v.cidade_destino = ?";
-        if($data)
+        if ($data)
             $sql .= " AND DATE(v.data_horario) = ?";
         $sql .= " ORDER BY v.data_horario";
 
         $stm = $conn->prepare($sql);
 
         $parametros = [ViagemSituacao::PROGRAMADA];
-        if($origem)
+        if ($origem)
             array_push($parametros, $origem);
-        if($destino)
+        if ($destino)
             array_push($parametros, $destino);
-        if($data)
+        if ($data)
             array_push($parametros, $data);
 
         $stm->execute($parametros);
@@ -56,19 +61,6 @@ class ViagensDAO
 
         return $this->mapViagens($result);
     }
-
-    public function findByMotoristaId(int $motoristaId)
-{
-    $conn = Connection::getConn();
-    $sql = "SELECT * FROM viagens WHERE id = :motoristaId"; // Usando a coluna correta
-
-    $stm = $conn->prepare($sql);
-    $stm->bindValue(":motoristaId", $motoristaId, PDO::PARAM_INT);
-    $stm->execute();
-
-    return $stm->fetchAll(PDO::FETCH_CLASS, "Viagens");
-}
-
 
     // Método para buscar uma viagem por seu ID
     public function findById(int $id)
@@ -147,6 +139,20 @@ class ViagensDAO
         $stm->execute();
     }
 
+    public function finalizar(int $idViagem)
+    {
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE viagens SET situacao = :situacao
+                WHERE id = :id";
+
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("situacao", "FINALIZADA");
+        $stm->bindValue("id", $idViagem);
+
+        $stm->execute();
+    }
+
     // Método para excluir uma viagem pelo seu ID
     public function deleteById(int $id)
     {
@@ -159,7 +165,8 @@ class ViagensDAO
         $stm->execute();
     }
 
-    public function listOrigens() {
+    public function listOrigens()
+    {
         $conn = Connection::getConn();
 
         $sql = "SELECT DISTINCT v.cidade_origem
@@ -174,7 +181,8 @@ class ViagensDAO
         return $cidades;
     }
 
-    public function listDestinos() {
+    public function listDestinos()
+    {
         $conn = Connection::getConn();
 
         $sql = "SELECT DISTINCT v.cidade_destino
@@ -205,11 +213,11 @@ class ViagensDAO
 
             $onibus = new Onibus();
             $onibus->setId($reg['onibus_id']);
-            if(isset($reg['onibus_modelo'])) {
+            if (isset($reg['onibus_modelo'])) {
                 $onibus->setModelo($reg['onibus_modelo']);
                 $onibus->setMarca($reg['onibus_marca']);
             }
-            if(isset($reg['onibus_modelo'])) {
+            if (isset($reg['onibus_modelo'])) {
                 $onibus->setModelo($reg['onibus_modelo']);
                 $onibus->setMarca($reg['onibus_marca']);
             }

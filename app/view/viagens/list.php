@@ -23,30 +23,39 @@ require_once(__DIR__ . "/../include/menu.php");
 
     <div class="row" style="margin-top: 10px;">
         <div class="col-12">
-            <table id="tabViagens" class=''>
+            <table id="tabViagens">
                 <thead>
-                    <tr>
-                        <th>Data e Horário</th>
-                        <th>Origem</th>
-                        <th>Destino</th>
-                        <th>Preço</th>
-                        <th>Passagens</th>
-                        <th>Situação</th>
-                        <th>Alterar</th>
-                        <th>Excluir</th>
+                    <tr class='text-center'>
+                        <th class='text-center'>Data e Horário</th>
+                        <th class='text-center'>Origem</th>
+                        <th class='text-center'>Destino</th>
+                        <th class='text-center'>Preço</th>
+                        <th class='text-center'>Passagens disponíveis</th>
+                        <th class='text-center'>Situação</th>
+                        <th class='text-center'>Passageiros</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($dados['lista'] as $viagem): ?>
                         <tr>
-                            <td><?= $viagem->getDataHorarioFormatado(); ?></td>
-                            <td><?= $viagem->getCidadeOrigem(); ?></td>
-                            <td><?= $viagem->getCidadeDestino(); ?></td>
-                            <td><?= $viagem->getPrecoFormato(); ?></td>
-                            <td><?= $viagem->getTotalPassagens(); ?></td>
-                            <td><?= $viagem->getSituacao(); ?></td>
-                            <td><a class="btn btn-primary" href="<?= BASEURL ?>/controller/ViagensController.php?action=edit&id=<?= $viagem->getId() ?>">Alterar</a></td>
-                            <td><a class="btn btn-danger" onclick="return confirm('Confirma a exclusão?');" href="<?= BASEURL ?>/controller/ViagensController.php?action=delete&id=<?= $viagem->getId() ?>">Excluir</a></td>
+                            <td class='text-center'><?= $viagem->getDataHorarioFormatado(); ?></td>
+                            <td class='text-center'><?= $viagem->getCidadeOrigem(); ?></td>
+                            <td class='text-center'><?= $viagem->getCidadeDestino(); ?></td>
+                            <td class='text-center'><?= $viagem->getPrecoFormato(); ?></td>
+                            <td class='text-center'><?= $viagem->getTotalPassagens(); ?></td>
+                            <td class='text-center'><?= $viagem->getSituacao(); ?></td>
+                            <td class='text-center'><a href="<?= BASEURL ?>/controller/ViagensController.php?action=listPassageirosByUsuario&id=<?= $viagem->getId() ?>">Ver passageiros</a></td>
+
+                            <?php
+                                if($viagem->getSituacao()!== "FINALIZADA"):
+                            ?>
+
+                            <td><a class="btn btn-danger" onclick="return confirm('Confirma a finalização da viagem?');" href="<?= BASEURL ?>/controller/ViagensController.php?action=finalizar&id=<?= $viagem->getId() ?>">FINALIZAR</a></td>
+
+                            <?php
+                                endif;
+                            ?>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -1,6 +1,6 @@
 <?php
-# Nome do arquivo: usuario/list.php
-# Objetivo: interface para listagem dos usuários do sistema
+#Nome do arquivo: usuario/list.php
+#Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
 
@@ -57,46 +57,61 @@ require_once(__DIR__ . "/../include/header.php");
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>" />
                 </div>
 
-                <!-- Definindo tipo como Cliente (campo oculto) -->
-                <input type="hidden" name="tipo" value="Cliente">
+                
 
-                <div class="form-group">
-                    <label for="selectSituacao">Situação:</label>
-                    <select name="situacao" id="selectSituacao" class="form-control">
-                        <option value="">Selecione a situação</option>
-                        <?php foreach ($dados["situacoes"] as $sit): ?>
-                            <option value="<?= $sit ?>"
-                                <?php if (isset($dados["usuario"]) && $dados["usuario"]->getSituacao() == $sit) echo "selected"; ?>>
-                                <?= $sit ?>
-                            </option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="selectSituacao">Situação:</label>
+                        <select name="situacao" id="selectSituacao" class="form-control">
+                            <option value="">Selecione a situação</option>
+                            <?php foreach ($dados["situacoes"] as $sit): ?>
+                                <option value="<?= $sit ?>"
+
+                                    <?php
+                                    if (isset($dados["usuario"]) && $dados["usuario"]->getSituacao() == $sit)
+                                        echo "selected";
+                                    ?>>
+
+                                    <?= $sit ?>
+
+                                </option>
+                            <?php endforeach ?>
+
+                        </select>
+                    </div>
 
                 <div class="form-group">
                     <label for="txtSenha">Senha:</label>
                     <input class="form-control" type="password" id="txtPassword" name="senha"
-                        maxlength="15" placeholder="Informe a senha" />
+                        maxlength="15" placeholder="Informe a senha"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getSenha() : ''); ?>" />
                 </div>
 
                 <div class="form-group">
                     <label for="txtConfSenha">Confirmação da senha:</label>
                     <input class="form-control" type="password" id="txtConfSenha" name="conf_senha"
-                        maxlength="15" placeholder="Confirme a senha" />
+                        maxlength="15" placeholder="Confirme da senha"
+                        value="<?php echo isset($dados["confSenha"]) ? $dados["confSenha"] : ''; ?>" />
                 </div>
+
             </div>
+
+
         </div>
 
         <div class="btns">
             <button type="submit" class="btn btn-success botao-alinhar-cadastro">CADASTRAR</button>
-            <a class="btn btn-secondary" href="<?= LOGIN_PAGE ?>">Voltar</a>
+            <a class="btn btn-secondary"
+                href="<?= LOGIN_PAGE ?>">Voltar</a>
             <button type="reset" class="btn btn-danger">Limpar</button>
         </div>
     </form>
 
+
+
     <div class="col-12">
         <?php require_once(__DIR__ . "/../include/msg.php"); ?>
     </div>
+
 </div>
 
 <?php

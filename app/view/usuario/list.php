@@ -1,6 +1,5 @@
 <?php
 #Nome do arquivo: usuario/list.php
-#Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
@@ -10,7 +9,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
 
 
-<div class="container mt-5">
+<div class="container">
     <h3 class="text-center">Usuários</h3>
 
     <div class="row">

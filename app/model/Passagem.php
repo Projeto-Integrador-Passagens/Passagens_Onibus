@@ -19,6 +19,9 @@ class Passagem {
     public function __construct()
     {
         $this->valor = null;
+        $this->nome = null;
+        $this->cpf = null;
+        $this->compPix = null;
     }
 
   

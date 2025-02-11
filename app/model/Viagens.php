@@ -20,6 +20,8 @@ class Viagens {
     {
         $this->id = null;
         $this->preco = null;
+        $this->cidade_origem = null;
+        $this->cidade_destino = null;
     }
 
     public function getId(): ?int

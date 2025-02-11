@@ -6,6 +6,7 @@ body {
     width: 100%;
     min-height: 100vh; /* Para garantir que o fundo cubra toda a altura da tela */
     margin: 0; /* Remove a margem padrão */
+    color: white;
 }
 
 

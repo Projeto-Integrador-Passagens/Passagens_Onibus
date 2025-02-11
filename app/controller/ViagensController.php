@@ -2,6 +2,7 @@
 # Classe controller para Viagens
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/ViagensDAO.php");
+require_once(__DIR__ . "/../dao/PassagemDAO.php");
 require_once(__DIR__ . "/../dao/OnibusDAO.php");
 require_once(__DIR__ . "/../service/ViagensService.php");
 require_once(__DIR__ . "/../model/Viagens.php");
@@ -10,6 +11,7 @@ require_once(__DIR__ . "/../model/enum/ViagemSituacao.php");
 class ViagensController extends Controller {
 
     private ViagensDAO $viagensDao;
+    private PassagemDAO $passagemDao;
     private ViagensService $viagensService;
     private OnibusDAO $onibusDao;
 
@@ -24,10 +26,39 @@ class ViagensController extends Controller {
         }
 
         $this->viagensDao = new ViagensDAO();
+        $this->passagemDao = new PassagemDAO();
         $this->viagensService = new ViagensService();
         $this->onibusDao = new OnibusDAO();
 
         $this->handleAction();
+    }
+
+    protected function listMyViagens() {
+        if(! $this->usuarioLogado())
+            exit;
+
+            $idUsuario = $this->getIdUsuarioLogado();
+
+        $viagens = $this->viagensDao->listByUsuario($idUsuario);
+
+        $dados["lista"] = $viagens;
+
+        $this->loadView("viagens/list.php", $dados, "");
+
+    }
+
+    protected function listPassageirosByUsuario() {
+        if(! $this->usuarioLogado())
+            exit;
+
+        $idViagem = isset($_GET['id']) ? $_GET['id'] : null;
+
+        $passageiros = $this->passagemDao->listPassageirosByUsuario($idViagem);
+
+        $dados["lista"] = $passageiros;
+
+        $this->loadView("viagens/listPassageiros.php", $dados, "");
+
     }
 
     protected function list(string $msgErro = "", string $msgSucesso = "") {
@@ -117,6 +148,18 @@ class ViagensController extends Controller {
             // Excluir
             $this->viagensDao->deleteById($viagem->getId());
             $this->list("", "Viagem excluída com sucesso!");
+        } else {
+            // Mensagem que não encontrou a viagem
+            $this->list("Viagem não encontrada!");
+        }               
+    }
+
+    protected function finalizar() {
+        $viagem = $this->findViagemById();
+        if ($viagem) {
+            // Finalizar viagem
+            $this->viagensDao->finalizar($viagem->getId());
+            $this->list("", "Viagem finalizada com sucesso!");
         } else {
             // Mensagem que não encontrou a viagem
             $this->list("Viagem não encontrada!");

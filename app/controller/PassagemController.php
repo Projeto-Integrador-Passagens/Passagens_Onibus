@@ -8,7 +8,6 @@ require_once(__DIR__ . "/../service/CompPixService.php");
 require_once(__DIR__ . "/../model/Passagem.php");
 require_once(__DIR__ . "/../model/Viagens.php");
 
-
 class PassagemController extends Controller
 {
 
@@ -116,54 +115,17 @@ class PassagemController extends Controller
 
 
 
-   // Listar pedidos de passagens do usuário
-// Listar pedidos de passagens do usuário
-// No PassagemController.php
+    protected function list() {
+        if(! $this->usuarioLogado())
+            exit;
 
-// Listar pedidos de passagens do usuário
-public function listarPedidosUsuario() 
-{
-    if (!$this->usuarioLogado()) 
-        exit;
+        $passagens = $this->passagemDao->list();
 
-    $idUsuario = $this->getIdUsuarioLogado();
-    
-    try {
-        // Buscar todas as passagens do usuário
-        $passagens = $this->passagemDao->findByUsuarioId($idUsuario);
-        
-        // Preparar dados para a view
-        $dados["passagens"] = $passagens;
-        $this->loadView("passagem/lista_usuario.php", $dados);
-    } catch (Exception $e) {
-        $dados["passagens"] = [];
-        $msgErro = "Ocorreu um erro ao buscar as passagens: " . $e->getMessage();
-        $this->loadView("passagem/lista_usuario.php", $dados, $msgErro);
+        $dados["listaPassagem"] = $passagens;
+
+        $this->loadView("passagem/passagemList.php", $dados, "");
+
     }
-}
-
-// Listar vendas de passagens das viagens do motorista
-public function listarPedidosMotorista() 
-{
-    if (!$this->usuarioLogado()) 
-        exit;
-
-    $idMotorista = $this->getIdUsuarioLogado();
-    
-    try {
-        // Buscar todas as passagens vendidas para as viagens do motorista
-        $passagens = $this->passagemDao->findByMotoristaId($idMotorista);
-        
-        // Preparar dados para a view
-        $dados["passagens"] = $passagens;
-        $this->loadView("passagem/lista_motorista.php", $dados);
-    } catch (Exception $e) {
-        $dados["passagens"] = [];
-        $msgErro = "Ocorreu um erro ao buscar as vendas: " . $e->getMessage();
-        $this->loadView("passagem/lista_motorista.php", $dados, $msgErro);
-    }
-}
-
 
 
     // Método para buscar uma venda pelo ID

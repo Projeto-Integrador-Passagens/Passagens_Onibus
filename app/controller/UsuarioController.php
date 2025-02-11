@@ -2,6 +2,7 @@
 #Classe controller para Usuário
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/PassagemDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 include_once(__DIR__ . "/../model/enum/UsuarioSituacao.php");
@@ -10,6 +11,7 @@ include_once(__DIR__ . "/../model/enum/UsuarioTipo.php");
 class UsuarioController extends Controller {
 
     private UsuarioDAO $usuarioDao;
+    private PassagemDAO $passagemDao;
     private UsuarioService $usuarioService;
 
     //Método construtor do controller - será executado a cada requisição a está classe
@@ -18,6 +20,7 @@ class UsuarioController extends Controller {
         //    exit;
 
         $this->usuarioDao = new UsuarioDAO();
+        $this->passagemDao = new PassagemDAO();
         $this->usuarioService = new UsuarioService();
 
         $this->handleAction();
@@ -40,6 +43,18 @@ class UsuarioController extends Controller {
 
     }
 
+    protected function listByUsuarioId() {
+        if(! $this->usuarioLogado())
+            exit;
+
+        $minhasCompras = $this->passagemDao->listByUsuarioId();
+
+        $dados["minhasCompras"] = $minhasCompras;
+
+        $this->loadView("usuario/passagensUser.php", $dados,  "", "");
+
+    }
+
     protected function save() {
         //Captura os dados do formulário
         $dados["id"] = isset($_POST['id']) ? $_POST['id'] : 0;
@@ -51,7 +66,6 @@ class UsuarioController extends Controller {
         $email = trim($_POST['email']) ? trim($_POST['email']) : NULL;
         $senha = trim($_POST['senha']) ? trim($_POST['senha']) : NULL;
         $confSenha = trim($_POST['conf_senha']) ? trim($_POST['conf_senha']) : NULL;
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : NULL;
         $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : NULL;
 
         //Cria objeto Usuario
@@ -65,7 +79,7 @@ class UsuarioController extends Controller {
         $usuario->setSenha($senha);
 
         if($this->usuarioLogadoStatus())
-            $usuario->setTipo($tipo);
+            $usuario->setTipo("CLIENTE");
         else 
             $usuario->setTipo(Tipo::CLIENTE);
 

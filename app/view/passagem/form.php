@@ -8,9 +8,9 @@ if (isset($_SESSION[SESSAO_USUARIO_ID]))
 ?>
 
 <?php
-    if(isset($_GET['id'])){
-        $idViagem = $_GET['id'];
-    }
+if (isset($_GET['id'])) {
+    $idViagem = $_GET['id'];
+}
 ?>
 
 <link rel="stylesheet" href="<?= BASEURL ?>/view/estilizacao/form.css">
@@ -46,6 +46,7 @@ if (isset($_SESSION[SESSAO_USUARIO_ID]))
 
     <form enctype="multipart/form-data" id="formVenda" method="POST" action="<?= BASEURL ?>/controller/PassagemController.php?action=salvarCompra&id=<?= $idViagem ?>">
 
+
         <!-- Dados dos passageiros -->
 
         <div class="form-group">
@@ -62,15 +63,16 @@ if (isset($_SESSION[SESSAO_USUARIO_ID]))
                 value="<?php echo isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''; ?>" />
         </div>
 
-        <div class="form-group">
-            <label for="compPix">Comprovante do Pix:</label>
-            <input class="form-control" type="file" id="compPix" name="compPix"
-                placeholder="Informe o comprovante do Pix." />
+        <div class="QrCode text-center">
+            <img src="<?= BASEURL ?>/assets/QrCodeMartinBus.png"
+                alt="QR Code de pagamento"
+                width="40%">
         </div>
 
-        <div class="form-group text-center">
-            <h5>QR Code para pagamento:</h5>
-            <img src="<?= BASEURL ?>/view/img/qrcode-falso.png" alt="QR Code para pagamento" width="200">
+        <div class="form-group">
+            <label for="numberCpf">Comprovante do pix:</label>
+            <input class="form-control" type="file" id="compPix" name="compPix"
+                placeholder="Informe o comprovante do pix." />
         </div>
 
         <div class="btns">
